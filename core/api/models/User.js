@@ -15,12 +15,12 @@ module.exports = {
 			unique: true
 		},
 		'username': {
-			type: 'string',
+			type: 'STRING',
 			required: true,
 			unique: true
 		},
 		'password': {
-			type: 'password',
+			type: 'STRING',
 			required: true
 		},
 		'exp': {
@@ -36,18 +36,18 @@ module.exports = {
 			type: 'datetime',
 		},
 		'avatar': {
-			type: 'string',
+			type: 'STRING',
 		},
 		'id': {
-			type: 'string'
+			type: 'STRING'
 		},
 		'save': {
 			'name': {
-				type: 'string',
+				type: 'STRING',
 				required: true
 			},
 			'id': {
-				type: 'string',
+				type: 'STRING',
 				required: true
 			},
 			'state': {
@@ -55,6 +55,15 @@ module.exports = {
 			}
 		}
 	},
+
+	toJSON: function() {
+		var obj = this.toObject();
+		// Remove the password object value
+		delete obj.password;
+		// return the new object without password
+		return obj;
+	},
+
 
 	beforeCreate: function(user, cb) {
 		bcrypt.genSalt(10, function(err, salt) {
