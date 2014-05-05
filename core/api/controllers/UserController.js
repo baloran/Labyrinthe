@@ -45,5 +45,20 @@ module.exports = {
 				return res.redirect('/');
 			});
 		})(req, res);
+	},
+
+	profil: function(req, res) {
+		var username = req.param('username');
+		User.findOne({
+			'username': username
+		}, function(err, data) {
+			if (err) {
+				console.log("Erreur: " + err);
+			};
+			console.log(data);
+			res.view({
+				'data': data
+			});
+		})
 	}
 };
