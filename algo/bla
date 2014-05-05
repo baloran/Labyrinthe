@@ -1,0 +1,11 @@
+générateur de labyrinthe:
+	- connexe
+	- json
+	- 
+
+
+
+
+Pour chaque "cube" => 1 état (16 cubes différents en tout, 1er aucun mur, 2ème mur à droite, 3ème mur en haut ect)
+=> en hexa, juste besoin d'un symbole (0123456789ABCDEF) pour qualifier la brique
+

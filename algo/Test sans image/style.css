@@ -1,0 +1,33 @@
+*{
+	margin:0px;
+	padding:0px;
+}
+
+table{
+	border-spacing:0px;
+	border:none;
+}
+
+td{
+	padding:0px;
+}
+
+.case{
+	width:30px;
+	height:30px;
+	background-color:#0d0a02;
+	border-top-width:3px;
+	border-top-style:solid;
+	border-top-color:#063415;
+	border-bottom-width:3px;
+	border-bottom-style:solid;
+	border-bottom-color:#063415;
+	border-right-width:3px;
+	border-right-style:solid;
+	border-right-color:#063415;
+	border-left-width:3px;
+	border-left-style:solid;
+	border-left-color:#063415;
+	margin:0px;
+	padding:0px;
+}
