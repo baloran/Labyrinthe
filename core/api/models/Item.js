@@ -21,6 +21,18 @@ module.exports = {
 		'desc': {
 			type: 'text',
 			required: true
-		}
+		},
+
+		'attaque': {
+			type: 'int',
+		},
+
+		'range': {
+			type: 'int',
+		},
+
+		'defence': {
+			type: 'int',
+		},
 	}
 };
