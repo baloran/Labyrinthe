@@ -101,6 +101,8 @@ var Murs = new Array();
 function construction(nombre_case, nombre_case_ligne) 
 {
 
+    $
+
     contenu = "<table id='tableau'>";
 
     for (i = 0; i < nombre_case; i++) 
@@ -124,14 +126,14 @@ function construction(nombre_case, nombre_case_ligne)
         }
     }
     contenu = contenu + "</table>";
-    document.getElementById("content").innerHTML = contenu;
+    $("#content").append(contenu);
 }
 
-construction(7000, 140);
+construction(1200, 60);
 
 var pile = new Array();
-var nombre_case = 7000;
-var nombre_case_ligne = 140;
+var nombre_case = 1200;
+var nombre_case_ligne = 60;
 
 var voisin = new Array();
 var z = 0;
@@ -513,3 +515,227 @@ function choix_image() {
 }
 
 //choix_image();
+
+
+function principale(event)
+{
+    var touche = event.keyCode;
+
+    if(touche == 39)
+    {
+        avancerRight();
+    }
+    else if(touche == 37)
+    {
+        avancerLeft();
+    }
+    else if(touche == 38)
+    {
+        avancerTop();
+    }
+    else if(touche == 40)
+    {
+        avancerBottom();
+    }
+}
+
+var dirX = 96;
+var positionJoueur = 0;
+var Moving = false;
+var speedJoueur = 50;
+
+function avancerRight()
+{
+    var perso = $('#joueur').position();
+    var left = perso.left;
+    var top = perso.top;
+    console.log(positionJoueur)
+    //div.css("backgroundPosition", "-90px 0px");
+
+    if(Murs[positionJoueur][1] == 0 && Moving == false)
+    {
+        Moving = true;
+        positionJoueur ++;
+        $('#joueur').animate(
+        {
+            left : left + dirX,
+        },
+        speedJoueur,
+        "linear",
+        function(){
+        //     if(top >= hauteur_apparition)
+        //     {
+        //         div.css('visibility', 'visible');
+        //     }
+        //     test_route(ligne, (colonne + 1), div, speed, 'right', speed);
+            Moving = false;
+            lumiere();
+        })
+    }
+}
+
+function avancerLeft()
+{
+    var perso = $('#joueur').position();
+    var left = perso.left;
+    var top = perso.top;
+    //div.css("backgroundPosition", "-90px 0px");
+
+    if(Murs[positionJoueur][3] == 0 && Moving == false)
+    {
+        Moving = true;
+        positionJoueur --;
+        $('#joueur').animate(
+        {
+            left : left - dirX,
+        },
+        speedJoueur,
+        "linear",
+        function(){
+        //     if(top >= hauteur_apparition)
+        //     {
+        //         div.css('visibility', 'visible');
+        //     }
+        //     test_route(ligne, (colonne + 1), div, speed, 'right', speed);
+            Moving = false;
+            lumiere();
+        })
+    }
+}
+
+function avancerBottom()
+{
+    var perso = $('#joueur').position();
+    var left = perso.left;
+    var top = perso.top;
+    //div.css("backgroundPosition", "-90px 0px");
+
+    if(Murs[positionJoueur][2] == 0 && Moving == false)
+    {
+        Moving = true;
+        positionJoueur = positionJoueur + nombre_case_ligne;
+        $('#joueur').animate(
+        {
+            top : top + dirX,
+        },
+        speedJoueur,
+        "linear",
+        function(){
+        //     if(top >= hauteur_apparition)
+        //     {
+        //         div.css('visibility', 'visible');
+        //     }
+        //     test_route(ligne, (colonne + 1), div, speed, 'right', speed);
+            Moving = false;
+            lumiere();
+        })
+    }
+}
+
+function avancerTop()
+{
+    var perso = $('#joueur').position();
+    var left = perso.left;
+    var top = perso.top;
+    //div.css("backgroundPosition", "-90px 0px");
+
+    if(Murs[positionJoueur][0] == 0 && Moving == false)
+    {
+        Moving = true;
+        positionJoueur = positionJoueur - nombre_case_ligne;
+        $('#joueur').animate(
+        {
+            top : top - dirX,
+        },
+        speedJoueur,
+        "linear",
+        function(){
+        //     if(top >= hauteur_apparition)
+        //     {
+        //         div.css('visibility', 'visible');
+        //     }
+        //     test_route(ligne, (colonne + 1), div, speed, 'right', speed);
+            Moving = false;
+            lumiere();
+        })
+    }
+}
+
+function lightOff() {
+    $('#content').css('opacity', 0.5);
+}
+
+
+function lumiere() {
+    var right = true;
+    var left = true;
+    var top = true;
+    var bottom = true;
+
+    $('td div').css('opacity', 0);
+    $('#case_' + positionJoueur).css('opacity', 1);
+    // RIGHT
+    for (j = positionJoueur + 1 ; j < positionJoueur + 4 ; j++)
+    {
+        if(Murs[j][3] == 1)
+        {
+            right = false;
+        }
+        if(Murs[j][3] == 0 && right == true)
+        {
+            $('#case_' + j).css('opacity', 1);
+        }
+    }
+
+
+    // LEFT
+    for (j = positionJoueur - 1 ; j > positionJoueur - 4 ; j--)
+    {
+        if(j < 0)
+        {
+            break;
+        }
+        if(Murs[j][1] == 1)
+        {
+            left = false;
+        }
+        if(Murs[j][1] == 0 && left == true)
+        {
+            $('#case_' + j).css('opacity', 1);
+        }
+    }
+
+    // BOTTOM
+    for (j = positionJoueur + nombre_case_ligne ; j < positionJoueur + (nombre_case_ligne * 4) ; j = j + nombre_case_ligne)
+    {
+        if(j < 0)
+        {
+            break;
+        }
+        if(Murs[j][0] == 1)
+        {
+            bottom = false;
+        }
+        if(Murs[j][0] == 0 && bottom == true)
+        {
+            $('#case_' + j).css('opacity', 1);
+        }
+    }
+
+    // TOP
+    for (j = positionJoueur - nombre_case_ligne ; j > positionJoueur - (nombre_case_ligne * 4) ; j = j - nombre_case_ligne)
+    {
+        if(j < 0)
+        {
+            break;
+        }
+        if(Murs[j][2] == 1)
+        {
+            top = false;
+        }
+        if(Murs[j][2] == 0 && top == true)
+        {
+            $('#case_' + j).css('opacity', 1);
+        }
+    }
+}

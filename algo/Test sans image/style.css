@@ -1,3 +1,8 @@
+html{
+	background-color: black;
+	overflow: hidden;
+}
+
 *{
 	margin:0px;
 	padding:0px;
@@ -12,9 +17,14 @@ td{
 	padding:0px;
 }
 
+#content{
+	position:absolute;
+	z-index: 10;
+}
+
 .case{
-	width:30px;
-	height:30px;
+	width:90px;
+	height:90px;
 	background-color:#0d0a02;
 	border-top-width:3px;
 	border-top-style:solid;
@@ -31,3 +41,27 @@ td{
 	margin:0px;
 	padding:0px;
 }
+
+#joueur{
+	width:80px;
+	height:80px;
+	background-color: blue;
+	position:relative;
+	top:9px;
+	left:9px;
+	z-index: 50;
+}
+
+#cache{
+	background-color: black;
+	left:0px; right:0;
+	top:0px; bottom:0;
+	z-index:100;
+	position:absolute;
+	opacity: 0.5;
+}
+
+td div{
+	opacity: 0;
+}
+
