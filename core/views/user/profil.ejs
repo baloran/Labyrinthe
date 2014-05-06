@@ -1,4 +1,6 @@
 <h3>Profil</h3>
 
 <%= data.username %>
-<%= data.createdAt %>
+<%= moment().fromNow(data.createdAt) %>
+
+<h3>Rewards</h3>

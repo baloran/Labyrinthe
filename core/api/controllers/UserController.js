@@ -6,7 +6,6 @@
  */
 var passport = require("passport");
 
-
 module.exports = {
 	register: function(req, res) {
 		var username = req.param('username');
