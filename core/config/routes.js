@@ -30,8 +30,9 @@ module.exports.routes = {
 	'GET /': "UserController.login",
 	'POST /login': "UserController.process",
 	'POST /register': "UserController.register",
-  'GET /profil/:username': "UserController.profil",
-
+	'GET /profil/:username': "UserController.profil",
+	'POST /item/object': "ItemController.list",
+	'POST /item/add': "ItemController.create",
 
 	// Custom routes here...
 
