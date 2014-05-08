@@ -1,30 +1,29 @@
 /**
- * ItemController.js
+ * EnnemyController.js
  *
- * @description :: Controller pour creer des items
+ * @description :: Controller pour creer des ennemy
  */
 
 module.exports = {
-
 	create: function(req, res) {
-		Item.create({
+		Ennemy.create({
 			'name': req.param('name'),
 			'desc': req.param('desc'),
 			'slug': req.param('name'),
-		}, function(err, item) {
+		}, function(err, Ennemy) {
 			if (err) res.json(err);
-			res.json(item);
+			res.json(Ennemy);
 		})
 	},
 
 	list: function(req, res) {
 		var slug = req.param('slug');
-		Item.findOne({
+		Ennemy.findOne({
 			'slug': slug
-		}, function(err, item) {
+		}, function(err, Ennemy) {
 			if (err) res.json(err);
-			if (item) {
-				res.json(item);
+			if (Ennemy) {
+				res.json(Ennemy);
 			} else {
 				res.json("Pas d'objet trouvé");
 			}
@@ -32,12 +31,12 @@ module.exports = {
 	},
 
 	index: function(req, res) {
-		res.view('item/add');
+		res.view('Ennemy/add');
 	},
 
 	modif: function(req, res) {
 		var slug = req.param("slug");
-		Item.findOne({
+		Ennemy.findOne({
 			'slug': slug
 		}, function(err, data) {
 			if (err) res.json(err);
@@ -53,12 +52,12 @@ module.exports = {
 
 	update: function(req, res) {
 		var slug = req.param("slug");
-		Item.update({
+		Ennemy.update({
 			'slug': slug
-		}, req.params.all(), function(err, item) {
+		}, req.params.all(), function(err, Ennemy) {
 			if (err) res.json(err);
-			if (item) {
-				res.json(item);
+			if (Ennemy) {
+				res.json(Ennemy);
 			} else {
 				res.json("Pas d'item");
 			}

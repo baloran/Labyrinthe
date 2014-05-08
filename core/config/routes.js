@@ -31,8 +31,16 @@ module.exports.routes = {
 	'POST /login': "UserController.process",
 	'POST /register': "UserController.register",
 	'GET /profil/:username': "UserController.profil",
+
+	// Item
+	'GET /item/object/:slug': "ItemController.modif",
 	'POST /item/object': "ItemController.list",
 	'POST /item/add': "ItemController.create",
+
+	// Ennemy
+	'GET /ennemy/object/:slug': "ennemyController.modif",
+	'POST /ennemy/object': "ennemyController.list",
+	'POST /ennemy/add': "ennemyController.create",
 
 	// Custom routes here...
 
