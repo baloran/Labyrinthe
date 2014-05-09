@@ -1,14 +1,23 @@
-<h2>Hello World</h2>
-
-<form action="login" method="POST">
-	<input type="text" name="username">
-	<input type="password" name="password">
-	<input type="submit">
-</form>
-
-<form action="register" method="POST">
-	<input type="text" name="username">
-	<input type="email" name="mail">
-	<input type="password" name="password">
-	<input type="submit">
-</form>
+<div class="pure-g-r pure-u-1">
+	<div class="login-form">
+		<h1>Labyrinthe</h1>
+		<div class="pure-u-1-2">
+			<h2>Login</h2>
+			<form action="/login" method="POST" class="pure-form pure-form-stacked">
+				<input type="text" name="username" placeholder="Pseudo">
+				<input type="password" name="password" placeholder="Password">
+				<button type="submit" class="pure-button pure-button-primary">Sign in</button>
+			</form>
+		</div>
+		
+		<div class="pure-u-1-2">
+			<h2>Register</h2>
+			<form action="/register" method="POST" class="pure-form pure-form-stacked">
+				<input type="text" name="username" placeholder="Pseudo">
+				<input type="email" name="mail" placeholder="E-mail">
+				<input type="password" name="password" placeholder="Password">
+				<button type="submit" class="pure-button pure-button-primary">Sign up</button>
+			</form>
+		</div>
+	</div>
+</div>
