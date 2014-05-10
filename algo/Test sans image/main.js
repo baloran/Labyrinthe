@@ -1,102 +1,33 @@
-/*
-    Prototypes
-*/
-/*
-function Arme (){
+var TabBool = new Array(); // stocke variable TRUE/FALSE pour construction laby
+var Murs = new Array(); // stocke variables des 4 murs pour chaque case
+var pile = new Array(); 
+var fil_arianne = new Array();
+var cheminement_long = new Array();
+var nombre_case = 600; // nombre case totale du labyrinthe
+var nombre_case_ligne = 60; // nombre de case par ligne
 
-    this.type = "1K47";
+var voisin = new Array();
+var z = 0;
 
-    this.feu = function (){
-        alert('faire feu');
-    };
+var compteur = 0;
 
-}
+var sortie = chiffre_aleatoire(nombre_case); /* ON CHOISIT AU HASARD UNE CASE COMME SORTIE : AMELIORER ALGO
+POUR VOIR SI ON PREND QUE SUR LES BORDS, ET sURTOUT LOIN DE LA POSITION DE DEPART */
+console.log(sortie);
 
-function Mechant (nom){
+construction(nombre_case, nombre_case_ligne);
 
-    this.vie = 100;
-    this.nom = nom;
-    this.arme = new Arme();
-
-    this.attaque = function (){
-        alert('attaquer');
-    };
-
-}
-
-function Tiles(genre, nbre_murs) {
-
-    this.murs = config.nbre_murs;
-
-}
-
-
-/*
-    Objet | Entité
-*/
-/*
-var toto = new Mechant();
-//toto.attaquer();
-
-var Tiles00 = new Tiles('genre', A);
-
-
-/*
-    Json
-*/
-/*
-var dependances = {
-    donjon: true
-};
-
-
-var config = {
-
-    0 : new Array(false, true, true, true),
-    1 : new Array(true, false, true, true),
-    2 : new Array(true, true, false, true),
-    3 : new Array(true, true, true, false),
-    4 : new Array(false, false, true, true),
-    5 : new Array(true, false, false, true),
-    6 : new Array(true, true, false, false),
-    7 : new Array(false, true, true, false),
-    8 : new Array(false, false, false, true),
-    9 : new Array(true, false, false, false),
-    A : new Array(false, true, false, false),
-    B : new Array(false, false, true, false),
-    C : new Array(false, true, false, true),
-    D : new Array(true, false, true, false),
-    E : new Array(true, true, true, true),
-    F : new Array(false, false, false, false)
-
-}
-
-*/
+labyrinthe(0);
+//$('#case_' + sortie).css("backgroundColor", "#780078");
 
 
 
+/*********************************************************************************
 
+CONSTRUCTION DU TABLEAU EN HTML ET CREATION TABLEAU MURS AVEC TOUT LES MURS PLEINS
+( = labyrinthe brut, sans chemin)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-var TabBool = new Array();
-var Murs = new Array();
+**********************************************************************************/
 
 function construction(nombre_case, nombre_case_ligne) 
 {
@@ -127,23 +58,13 @@ function construction(nombre_case, nombre_case_ligne)
     $("#content").append(contenu);
 }
 
-construction(600, 60);
 
-var pile = new Array();
-var nombre_case = 600;
-var nombre_case_ligne = 60;
 
-var voisin = new Array();
-var z = 0;
-var k = chiffre_aleatoire(nombre_case);
+/**************************************************************************************************************
 
-var compteur = 0;
+FONCTION DE CREATION DU LABYRINTHE, QUI BOUCLE AVEC TROUVER_VOISINs() JUSQU'A CE QUE LE LABYRINTHE SOIT TERMINE
 
-//pile.push(12);
-
-//console.log(pile);
-
-//labyrinthe(12);
+***************************************************************************************************************/
 
 function labyrinthe(k) {
     
@@ -154,24 +75,7 @@ function labyrinthe(k) {
     }
     TabBool[k] = true;
 
-    //console.log(fil_arianne.length);
-    //console.log(cheminement_long.length);
-    /*if(fil_arianne.length > cheminement_long.length)
-    {
-        cheminement_long = fil_arianne;
-    }*/
-
-
-    //test = trouver_voisins(k);
-    //case_choisie = chiffre_aleatoire(voisin.length);
-    //TabBool[k][l] = true;
-    //$(case_choisie).css("background", "#450045");
-
-    //console.log(test);
-
     case_suivante = trouver_voisins(k);
-
-    //console.log(case_suivante);
 
     if(case_suivante == false)
     {
@@ -181,42 +85,28 @@ function labyrinthe(k) {
         {
             return;
         }
-    }
-    //TabBool[case_suivante] = true;
-    
-    
+    }  
+        /********************************************************************************************************** 
+        SWITCH ENTRE CES DEUX LIGNES PERMET D'AVOIR UNE GENERATION SOIT DIRECTE, SOIT "DESSINEE" AU FUR ET A MESURE 
+        ***********************************************************************************************************/
         setTimeout('labyrinthe(case_suivante)', 5);
         //labyrinthe(case_suivante);
 }
 
-
-var fil_arianne = new Array();
-var cheminement_long = new Array();
-
-var sortie = chiffre_aleatoire(nombre_case);
-console.log(sortie);
-labyrinthe(0);
-//$('#case_' + sortie).css("backgroundColor", "#780078");
-
-
-function chiffre_aleatoire(C){
-    x = Math.floor(Math.random() * C);
-    return x;
-}
 
 function trouver_voisins(k) {
     
 
     voisin = new Array();
     z = 0;
+    /* ON DETERMINE LES 4 VOISINS */
     case_dessus = k - nombre_case_ligne;
     case_droite = k + 1;
     case_bas = k + nombre_case_ligne;
     case_gauche = k - 1;
 
-    //console.log(case_dessus);
 
-
+    // TEST SI CHAQUE CASE EST NON EXPLOREE ET CONNECTABLE
     if(TabBool[case_dessus] == false && case_dessus >= 0)
     {
         voisin[z] = case_dessus;
@@ -238,16 +128,14 @@ function trouver_voisins(k) {
         z = z + 1;
     }
 
-    //console.log(voisin);
-    //console.log(voisin.length);
 
-
-
+    // SI ON EST DANS UN CUL DE SAC
     if(voisin.length == 0)
     {
         return false;
     }
 
+    // STOCK LE PLUS LONG CHEMIN DANS cheminement_long
     if(fil_arianne.length > cheminement_long.length)
     {
         for (f = 0; f <= fil_arianne.length; f++)
@@ -260,10 +148,10 @@ function trouver_voisins(k) {
     fil_arianne.push(k);
 
     
-
+    // CHOIX D'UNE DES CASES AU HASARD
     case_suivante = voisin[chiffre_aleatoire(voisin.length)];
     
-
+    // ON MODIFIE L'ASPECT GRAPHIQUE ET ON STOCKE LES NOUVEAUX MURS
     switch(case_suivante) 
     {
         case case_dessus:
@@ -301,128 +189,29 @@ function trouver_voisins(k) {
 
 
 
+/********************************
+
+RENVOIE UN CHIFFRE ENTRE 0 ET C
+
+********************************/
+
+function chiffre_aleatoire(C){
+    x = Math.floor(Math.random() * C);
+    return x;
+}
+
+
+
+
+/*********************************************************************************
+
+FONCTION PERMETTANT D'AFFICHER DES .png PLUTOT QUE DU CSS (CARRE AVEC DES BORDERS)
+
+**********************************************************************************/
 
 function choix_image() {
     for (i = 0; i < nombre_case; i++) 
     {
-        /*switch (Murs[i][0])
-        {
-            case 0:
-            switch (Murs[i][1])
-            {
-                case 0:
-                switch (Murs[i][2])
-                {
-                    case 0:
-                    switch (Murs[i][3])
-                    {
-                        case 0:
-                        $('#case_' + i).css("backgroundColor", "#ff0000");
-                        break;
-
-                        case 1:
-                        $('#case_' + i).css("backgroundColor", "#450000");
-                        break;
-                    }
-                    case 1:
-                    switch (Murs[i][3])
-                    {
-                        case 0:
-                        $('#case_' + i).css("backgroundColor", "#004500");
-                        break;
-
-                        case 1:
-                        $('#case_' + i).css("backgroundColor", "#000045");
-                        break;
-                    }
-                }
-                case 1:
-                switch (Murs[i][2])
-                {
-                    case 0:
-                    switch (Murs[i][3])
-                    {
-                        case 0:
-                        $('#case_' + i).css("background", "#450045");
-                        break;
-
-                        case 1:
-                        $('#case_' + i).css("background", "#454500");
-                        break;
-                    }
-                    case 1:
-                    switch (Murs[i][3])
-                    {
-                        case 0:
-                        $('#case_' + i).css("background", "#004545");
-                        break;
-
-                        case 1:
-                        $('#case_' + i).css("background", "#454545");
-                        break;
-                    }
-                }
-            }
-            case 1:
-            switch (Murs[i][1])
-            {
-                case 0:
-                switch (Murs[i][2])
-                {
-                    case 0:
-                    switch (Murs[i][3])
-                    {
-                        case 0:
-                        $('#case_' + i).css("background", "#110000");
-                        break;
-
-                        case 1:
-                        $('#case_' + i).css("background", "#001100");
-                        break;
-                    }
-                    case 1:
-                    switch (Murs[i][3])
-                    {
-                        case 0:
-                        $('#case_' + i).css("background", "#000011");
-                        break;
-
-                        case 1:
-                        $('#case_' + i).css("background", "#110011");
-                        break;
-                    }
-                }
-                case 1:
-                switch (Murs[i][2])
-                {
-                    case 0:
-                    switch (Murs[i][3])
-                    {
-                        case 0:
-                        $('#case_' + i).css("background", "#111100");
-                        break;
-
-                        case 1:
-                        $('#case_' + i).css("background", "#001111");
-                        break;
-                    }
-                    case 1:
-                    switch (Murs[i][3])
-                    {
-                        case 0:
-                        $('#case_' + i).css("background", "#111111");
-                        break;
-
-                        case 1:
-                        $('#case_' + i).css("background", "#dedede");
-                        break;
-                    }
-                }
-            }
-        }*/
-
-
-
         if (Murs[i][0] == 1 && Murs[i][1] == 0 && Murs[i][2] == 0 && Murs[i][3] == 0)
         {
             $('#case_' + i).css('background-image', 'url(images/carres30/carre_haut.png)');
@@ -524,6 +313,15 @@ function choix_image() {
 //choix_image();
 
 
+
+
+/****************************************************************
+
+FONCTION DE CHOIX DE L'ACTION A EFFECTUER SELON LE BOUTON.
+POUR LE MOMENT QUE DEPLACEMENT, ACTION COMBAT/EQUIPEMENT A VENIR
+
+*****************************************************************/
+
 function principale(event)
 {
     var touche = event.keyCode;
@@ -551,10 +349,20 @@ function principale(event)
     }
 }
 
+
+/* VARIABLES POUR DEPLACEMENTS */
 var dirX = 96;
 var positionJoueur = 186;
 var Moving = false;
 var speedJoueur = 50;
+
+
+
+/*************************************************************************************
+
+DEPLACEMENTS AVEC ANIMATION JQUERY ET STOCK DE LA NOUVELLE POSITION DU JOUEUR + LUMIERE
+
+**************************************************************************************/
 
 function avancerRight()
 {
@@ -566,7 +374,7 @@ function avancerRight()
 
     if(Murs[positionJoueur][1] == 0 && Moving == false)
     {
-        Moving = true;
+        Moving = true; /* PERMET D'EVITER DE REPETER DES ANIMATIONS JQUERY AVANT QUE LA PRECEDANTE SOIT TERMINEE */
         positionJoueur ++;
         $('#content').animate(
         {
@@ -575,11 +383,6 @@ function avancerRight()
         speedJoueur,
         "linear",
         function(){
-        //     if(top >= hauteur_apparition)
-        //     {
-        //         div.css('visibility', 'visible');
-        //     }
-        //     test_route(ligne, (colonne + 1), div, speed, 'right', speed);
             Moving = false;
             lumiere();
         })
@@ -604,11 +407,6 @@ function avancerLeft()
         speedJoueur,
         "linear",
         function(){
-        //     if(top >= hauteur_apparition)
-        //     {
-        //         div.css('visibility', 'visible');
-        //     }
-        //     test_route(ligne, (colonne + 1), div, speed, 'right', speed);
             Moving = false;
             lumiere();
         })
@@ -633,11 +431,6 @@ function avancerBottom()
         speedJoueur,
         "linear",
         function(){
-        //     if(top >= hauteur_apparition)
-        //     {
-        //         div.css('visibility', 'visible');
-        //     }
-        //     test_route(ligne, (colonne + 1), div, speed, 'right', speed);
             Moving = false;
             lumiere();
         })
@@ -662,32 +455,39 @@ function avancerTop()
         speedJoueur,
         "linear",
         function(){
-        //     if(top >= hauteur_apparition)
-        //     {
-        //         div.css('visibility', 'visible');
-        //     }
-        //     test_route(ligne, (colonne + 1), div, speed, 'right', speed);
             Moving = false;
             lumiere();
         })
     }
 }
 
+
+/* POUR BAISSER LA LUMIERE DANS TOUT LE LABYRINTHE (Malus? ) */
 function lightOff() {
     $('#content').css('opacity', 0.5);
 }
 
+
+
+/************************
+
+TEST LUMIERE DYNAMIQUE
+
+*************************/
 
 function lumiere() {
     var right = true;
     var left = true;
     var top = true;
     var bottom = true;
+
     var distance;
 
-    $('td div').css('opacity', 0);
+    $('td div').css('opacity', 0);  /**** LIGNE A METTRE EN COMMENTAIRE SI ON VEUT QUE LES LUMIERES RESTENT APRES DECOUVERTE ****/
+
     $('#case_' + positionJoueur).css('opacity', 1);
-    // RIGHT   PB AVEC TOUT EN BAS A DROITE
+
+    // RIGHT 
     distance = -1;
     for (j = positionJoueur + 1 ; j < positionJoueur + 4 ; j++)
     {
@@ -707,7 +507,6 @@ function lumiere() {
         if(Murs[j][3] == 0 && right == true)
         {
             $('#case_' + j).css('opacity', 1 - (distance * 0.3));
-            //console.log(1 - (distance * 0.3));
         }
     }
 
