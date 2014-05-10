@@ -39,7 +39,6 @@ module.exports.routes = {
 
 	// Ennemy
 	'GET /ennemy/object/:slug': "ennemyController.modif",
-	'GET /ennemy/delete/:id': "ennemyController.delete",
 	'POST /ennemy/object': "ennemyController.list",
 	'POST /ennemy/add': "ennemyController.create",
 

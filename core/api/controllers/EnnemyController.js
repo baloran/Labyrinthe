@@ -12,7 +12,7 @@ module.exports = {
 			'slug': req.param('name'),
 		}, function(err, Ennemy) {
 			if (err) res.json(err);
-			res.redirect('/ennemy');
+			res.json(Ennemy);
 		})
 	},
 
@@ -31,14 +31,7 @@ module.exports = {
 	},
 
 	index: function(req, res) {
-		var data;
-		Ennemy.find(function(err,item){
-			if (err) data = err;
-			if (item) {
-				data = item;
-			};
-			res.view('ennemy/add',{'data':data})
-		})
+		res.view('Ennemy/add');
 	},
 
 	modif: function(req, res) {
@@ -68,17 +61,6 @@ module.exports = {
 			} else {
 				res.json("Pas d'item");
 			}
-		})
-	},
-
-	delete:function(req,res){
-		Ennemy.findOne({'id':req.param('id')},function(err,data){
-			if (err) res.jsonr(err) ;
-			if (data) {
-				Ennemy.destroy({'id':req.param('id')},function(err){
-					res.redirect('/ennemy')
-				});
-			};
 		})
 	}
 };
