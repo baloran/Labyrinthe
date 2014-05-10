@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>New Sails App</title>
+    <title>Labyrinthe</title>
 
     <!-- Viewport mobile tag for sensible mobile support -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.4.2/pure-min.css">
     <!--  
         Stylesheets and Preprocessors
         ==============================
@@ -29,12 +29,29 @@
     -->
 
     <!--STYLES-->
-    <link rel="stylesheet" href="/styles/importer.css">
+    <link rel="stylesheet" href="/styles/app.css">
     <!--STYLES END-->
   </head>
 
   <body>
-    <%- body %>
+    <div class="home-menu pure-menu pure-menu-open pure-menu-horizontal">
+    <a href="#" class="pure-menu-heading">Labyrinthe</a>
+
+    <ul>
+    <li class="pure-menu-selected"><a href="/">Home</a></li>
+      <li><a href="/item">Item</a></li>
+      <li><a href="/ennemy">Ennemy</a></li>
+      <li class="pure-menu-disabled"><a href="#">Play</a></li>
+      <li class="pure-menu-disabled"><a href="#">Users</a></li>
+    </ul>
+    </div>
+    <div class="content">
+      <div class="pure-g">
+          <div class="l-box pure-u-1 pure-u-med-3-5">
+            <%- body %>
+            </div>
+        </div>
+    </div>
 
 
 
