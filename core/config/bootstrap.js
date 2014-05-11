@@ -9,7 +9,18 @@
  */
 
 module.exports.bootstrap = function(cb) {
-
+	
+	var sites_info = {
+		title: "Default title",
+		description: "Une petite description"
+	};
+	Sites.count(function(err,data){
+		if (data < 1) {
+			Sites.create(sites_info,function(err,data){
+				if (err) console.log(err);
+			});
+		}
+	});
 	// It's very important to trigger this callack method when you are finished 
 	// with the bootstrap!  (otherwise your server will never lift, since it's waiting on the bootstrap)
 	cb();

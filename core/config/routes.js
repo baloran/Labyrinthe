@@ -31,6 +31,8 @@ module.exports.routes = {
 	'POST /login': "UserController.process",
 	'POST /register': "UserController.register",
 	'GET /profil/:username': "UserController.profil",
+	'POST /sites/update':"SitesController.update",
+	'GET /sites':"SitesController.index",
 
 	// Item
 	'GET /item/object/:slug': "ItemController.modif",
