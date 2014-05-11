@@ -1,6 +1,17 @@
+<h3>Liste enemy</h3>
+<hr>
+<% _.each(data, function(data){  %>
+	<h4><%= data.name %></h4>
+	<p><%= data.desc %></p>
+	<div class="meta" >
+	<a href="/ennemy/delete/<%= data.id %>" >Delete</a>
+	<a href="/ennemy/update/<%= data.id %>" >Update</a>
+</div>
+<% }) %>
+<hr>
 <h3>Ajouter un objet</h3>
 
-<form action="/item/add" method="POST" class="pure-form pure-form-stacked">
+<form action="/ennemy/add" method="POST" class="pure-form pure-form-stacked">
 	<input type="text" name="name" placeholder="Nom">
 	<input type="text" name="desc" placeholder="Description">
 	<input type="submit">

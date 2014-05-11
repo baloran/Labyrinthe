@@ -12,7 +12,7 @@ module.exports = {
 			'slug': req.param('name'),
 		}, function(err, Ennemy) {
 			if (err) res.json(err);
-			res.json(Ennemy);
+			res.redirect('/ennemy')
 		})
 	},
 
@@ -31,7 +31,16 @@ module.exports = {
 	},
 
 	index: function(req, res) {
-		res.view('Ennemy/add');
+		var data;
+		Ennemy.find(function(err,enemy){
+			if (err) data = err;
+			if (enemy) {
+				data = enemy;
+			}else{
+				data = "No enemy"
+			}
+			res.view('ennemy/add',{'data':data});
+		})
 	},
 
 	modif: function(req, res) {
@@ -60,6 +69,21 @@ module.exports = {
 				res.json(Ennemy);
 			} else {
 				res.json("Pas d'item");
+			}
+		})
+	},
+
+	delete: function(req,res){
+		var id = req.param('id');
+		Ennemy.findOne({'id':id},function(err,data){
+			if (err) res.json(err);
+			if (data) {
+				Ennemy.destroy({'id':id},function(err){
+					if (err) res.json(err);
+				});
+				res.redirect('/ennemy');
+			}else{
+				res.json("No enemy with this id");
 			}
 		})
 	}

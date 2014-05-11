@@ -1,3 +1,15 @@
+<h3>Liste item</h3>
+<hr>
+<% _.each(data, function(data){  %>
+	<h4><%= data.name %></h4>
+	<p><%= data.desc %></p>
+	<div class="meta" >
+	<a href="/item/delete/<%= data.id %>" >Delete</a>
+	<a href="/item/update/<%= data.id %>" >Update</a>
+</div>
+<% }) %>
+<hr>
+
 <h3>Ajouter un objet</h3>
 
 <form action="/item/add" method="POST" class="pure-form pure-form-stacked">

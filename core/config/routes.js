@@ -36,11 +36,13 @@ module.exports.routes = {
 	'GET /item/object/:slug': "ItemController.modif",
 	'POST /item/object': "ItemController.list",
 	'POST /item/add': "ItemController.create",
+	'GET /item/delete/:id': "ItemController.delete",
 
 	// Ennemy
-	'GET /ennemy/object/:slug': "ennemyController.modif",
-	'POST /ennemy/object': "ennemyController.list",
-	'POST /ennemy/add': "ennemyController.create",
+	'GET /ennemy/object/:slug': "EnnemyController.modif",
+	'POST /ennemy/object': "EnnemyController.list",
+	'POST /ennemy/add': "EnnemyController.create",
+	'GET /ennemy/delete/:id': "EnnemyController.delete",
 
 	// Custom routes here...
 

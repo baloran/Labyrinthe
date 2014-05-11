@@ -13,7 +13,7 @@ module.exports = {
 			'slug': req.param('name'),
 		}, function(err, item) {
 			if (err) res.json(err);
-			res.json(item);
+			res.redirect('/item');
 		})
 	},
 
@@ -32,7 +32,16 @@ module.exports = {
 	},
 
 	index: function(req, res) {
-		res.view('item/add');
+		var data;
+		Item.find(function(err,item){
+			if (err) data = err;
+			if (item) {
+				data = item;
+			}else{
+				data = "No item"
+			}
+			res.view('item/add',{'data':data});
+		})
 	},
 
 	modif: function(req, res) {
@@ -61,6 +70,21 @@ module.exports = {
 				res.json(item);
 			} else {
 				res.json("Pas d'item");
+			}
+		})
+	},
+
+	delete: function(req,res){
+		var id = req.param('id');
+		Item.findOne({'id':id},function(err,data){
+			if (err) res.json(err);
+			if (data) {
+				Item.destroy({'id':id},function(err){
+					if (err) res.json(err);
+				});
+				res.redirect('/item');
+			}else{
+				res.json("No item with this id");
 			}
 		})
 	}
