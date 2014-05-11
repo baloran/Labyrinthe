@@ -44,9 +44,9 @@ module.exports = {
 	},
 
 	modif: function(req, res) {
-		var slug = req.param("slug");
+		var id = req.param("id");
 		Ennemy.findOne({
-			'slug': slug
+			'id': id
 		}, function(err, data) {
 			if (err) res.json(err);
 			if (data) {
@@ -60,13 +60,13 @@ module.exports = {
 	},
 
 	update: function(req, res) {
-		var slug = req.param("slug");
+		var id = req.param("id");
 		Ennemy.update({
-			'slug': slug
-		}, req.params.all(), function(err, Ennemy) {
+			'id': id
+		}, req.params.all(), function(err, ennemy) {
 			if (err) res.json(err);
-			if (Ennemy) {
-				res.json(Ennemy);
+			if (ennemy) {
+				res.json(ennemy);
 			} else {
 				res.json("Pas d'item");
 			}

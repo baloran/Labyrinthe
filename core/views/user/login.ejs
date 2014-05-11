@@ -1,6 +1,9 @@
 <div class="pure-g-r pure-u-1">
 	<div class="login-form">
 		<h1>Labyrinthe</h1>
+		<% if(sites.home) { %>
+		<p><%= sites.home %></p>
+		<% } %>
 		<div class="pure-u-1-2">
 			<h2>Login</h2>
 			<form action="/login" method="POST" class="pure-form pure-form-stacked">

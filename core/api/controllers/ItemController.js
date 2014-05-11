@@ -45,9 +45,9 @@ module.exports = {
 	},
 
 	modif: function(req, res) {
-		var slug = req.param("slug");
+		var id = req.param("id");
 		Item.findOne({
-			'slug': slug
+			'id': id
 		}, function(err, data) {
 			if (err) res.json(err);
 			if (data) {
@@ -61,9 +61,9 @@ module.exports = {
 	},
 
 	update: function(req, res) {
-		var slug = req.param("slug");
+		var id = req.param("id");
 		Item.update({
-			'slug': slug
+			'id': id
 		}, req.params.all(), function(err, item) {
 			if (err) res.json(err);
 			if (item) {

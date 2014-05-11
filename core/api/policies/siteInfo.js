@@ -3,7 +3,6 @@ module.exports = function(req, res, next) {
 
 	Sites.findOne(1,function(err,data){
 		if (err) console.log(err);
-		console.log(data);
 		req.options.locals.sites = data;
 		return next()
 	})

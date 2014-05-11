@@ -1,8 +1,15 @@
 <h3>Sites modif</h3>
 	
 	<form action="/sites/update" method="post" class="pure-form pure-form-stacked">
+		<label for="title">Title</label>
 		<input type="text" name="title" value="<%= data.title %>">
+
+		<label for="description">Description</label>
 		<textarea name="description" id="" cols="30" rows="10"><%= data.description %></textarea>
+
+		<label for="home">Home Page</label>
+		<textarea name="home" id="" cols="30" rows="10"><%if(data.home) data.description %></textarea>
+
 		<a href="#" id="add_input">Ajouter un champ</a>
 		<input type="submit" value="Mettre à jour">
 	</form>

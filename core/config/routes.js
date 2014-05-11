@@ -35,13 +35,15 @@ module.exports.routes = {
 	'GET /sites':"SitesController.index",
 
 	// Item
-	'GET /item/object/:slug': "ItemController.modif",
+	'GET /item/object/:id': "ItemController.modif",
+	'POST /item/object/:id': "ItemController.update",
 	'POST /item/object': "ItemController.list",
 	'POST /item/add': "ItemController.create",
 	'GET /item/delete/:id': "ItemController.delete",
 
 	// Ennemy
-	'GET /ennemy/object/:slug': "EnnemyController.modif",
+	'GET /ennemy/object/:id': "EnnemyController.modif",
+	'POST /ennemy/object/:id': "EnnemyController.update",
 	'POST /ennemy/object': "EnnemyController.list",
 	'POST /ennemy/add': "EnnemyController.create",
 	'GET /ennemy/delete/:id': "EnnemyController.delete",

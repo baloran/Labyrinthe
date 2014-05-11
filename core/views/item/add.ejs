@@ -1,15 +1,27 @@
 <h3>Liste item</h3>
-<hr>
+<table class="pure-table">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Desription</th>
+            <th>Delete</th>
+            <th>Update</th>
+        </tr>
+    </thead>
+
+    <tbody>
 <% _.each(data, function(data){  %>
-	<h4><%= data.name %></h4>
-	<p><%= data.desc %></p>
-	<div class="meta" >
-	<a href="/item/delete/<%= data.id %>" >Delete</a>
-	<a href="/item/update/<%= data.id %>" >Update</a>
-</div>
+<tr>
+            <td><%= data.id %></td>
+            <td><%= data.name %></td>
+            <td><%= data.desc %></td>
+            <td><a href="/item/delete/<%= data.id %>" >Delete</a></td>
+            <td><a href="/item/object/<%= data.id %>" >Update</a></td>
+        </tr>
 <% }) %>
-<hr>
-<%= sites.title %>
+</tbody>
+</table>
 <h3>Ajouter un objet</h3>
 
 <form action="/item/add" method="POST" class="pure-form pure-form-stacked">
