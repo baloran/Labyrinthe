@@ -12,7 +12,7 @@ module.exports = {
 			'slug': req.param('name'),
 		}, function(err, Ennemy) {
 			if (err) res.json(err);
-			res.redirect('/ennemy')
+			res.redirect('/ennemy');
 		})
 	},
 
