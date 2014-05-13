@@ -1,13 +1,16 @@
 var TabBool = new Array(); // stocke variable TRUE/FALSE pour construction laby
 var Murs = new Array(); // stocke variables des 4 murs pour chaque case
 var pile = new Array(); 
-var fil_arianne = new Array();
+var fil_arianne = new Array(); // stocke succession de case pour retour en arrière | construction labyrinthe
 var cheminement_long = new Array();
 var nombre_case = 600; // nombre case totale du labyrinthe
 var nombre_case_ligne = 60; // nombre de case par ligne
 
 var voisin = new Array();
 var z = 0;
+
+var distance_vue = 3;
+// var modificateur_vue = distance_vue / 
 
 var compteur = 0;
 
@@ -68,7 +71,7 @@ FONCTION DE CREATION DU LABYRINTHE, QUI BOUCLE AVEC TROUVER_VOISINs() JUSQU'A CE
 
 function labyrinthe(k) {
     
-    $('#case_' + k).css("background", "#0d0a02");
+    //$('#case_' + k).css("background", "#0d0a02");
     if(k == sortie)
     {
         $('#case_' + k).css("background", "#dd00dd");
@@ -89,8 +92,8 @@ function labyrinthe(k) {
         /********************************************************************************************************** 
         SWITCH ENTRE CES DEUX LIGNES PERMET D'AVOIR UNE GENERATION SOIT DIRECTE, SOIT "DESSINEE" AU FUR ET A MESURE 
         ***********************************************************************************************************/
-        setTimeout('labyrinthe(case_suivante)', 5);
-        //labyrinthe(case_suivante);
+        //setTimeout('labyrinthe(case_suivante)', 5);
+        labyrinthe(case_suivante);
 }
 
 
@@ -155,29 +158,29 @@ function trouver_voisins(k) {
     switch(case_suivante) 
     {
         case case_dessus:
-        $("#case_" + k).css('borderTop', '3px #0d0a02 solid');
-        $("#case_" + case_suivante).css('borderBottom', '3px #0d0a02 solid');
+        // $("#case_" + k).css('borderTop', '3px #0d0a02 solid');
+        // $("#case_" + case_suivante).css('borderBottom', '3px #0d0a02 solid');
         Murs[k][0] = 0;
         Murs[case_suivante][2] = 0;
         break;
 
         case case_droite:
-        $("#case_" + k).css('borderRight', '3px #0d0a02 solid');
-        $("#case_" + case_suivante).css('borderLeft', '3px #0d0a02 solid');
+        // $("#case_" + k).css('borderRight', '3px #0d0a02 solid');
+        // $("#case_" + case_suivante).css('borderLeft', '3px #0d0a02 solid');
         Murs[k][1] = 0;
         Murs[case_suivante][3] = 0;
         break;
 
         case case_bas:
-        $("#case_" + k).css('borderBottom', '3px #0d0a02 solid');
-        $("#case_" + case_suivante).css('borderTop', '3px #0d0a02 solid');
+        // $("#case_" + k).css('borderBottom', '3px #0d0a02 solid');
+        // $("#case_" + case_suivante).css('borderTop', '3px #0d0a02 solid');
         Murs[k][2] = 0;
         Murs[case_suivante][0] = 0;
         break;
 
         case case_gauche:
-        $("#case_" + k).css('borderLeft', '3px #0d0a02 solid');
-        $("#case_" + case_suivante).css('borderRight', '3px #0d0a02 solid');
+        // $("#case_" + k).css('borderLeft', '3px #0d0a02 solid');
+        // $("#case_" + case_suivante).css('borderRight', '3px #0d0a02 solid');
         Murs[k][3] = 0;
         Murs[case_suivante][1] = 0;
         break;
@@ -200,6 +203,37 @@ function chiffre_aleatoire(C){
     return x;
 }
 
+
+function affichage(){
+    var case_css = $('.case');
+    case_css.css('backgroundColor', '#0d0a02');
+    case_css.css('borderTopWidth', '3 px').css('borderRightWidth', '3 px').css('borderBottomWidth', '3 px').css('borderLeftWidth', '3 px');
+    case_css.css('borderTopStyle', 'solid').css('borderRightStyle', 'solid').css('borderBottomStyle', 'solid').css('borderLeftStyle', 'solid');
+    case_css.css('borderTopColor', '#063415').css('borderRightColor', '#063415').css('borderBottomColor', '#063415').css('borderLeftColor', '#063415');
+    $('#case_' + sortie).css("background", "#dd00dd");
+    
+    for (i = 0; i < nombre_case; i++) 
+    {
+        if (Murs[i][0] == 0)
+        {
+            $("#case_" + i).css('borderTop', '3px #0d0a02 solid');
+        }
+        if (Murs[i][1] == 0)
+        {
+            $("#case_" + i).css('borderRight', '3px #0d0a02 solid');
+        }
+        if (Murs[i][2] == 0)
+        {
+            $("#case_" + i).css('borderBottom', '3px #0d0a02 solid');
+        }
+        if (Murs[i][3] == 0)
+        {
+            $("#case_" + i).css('borderLeft', '3px #0d0a02 solid');
+        }
+    }
+
+    lumiere();
+}
 
 
 
@@ -352,9 +386,13 @@ function principale(event)
 
 /* VARIABLES POUR DEPLACEMENTS */
 var dirX = 96;
-var positionJoueur = 186;
+var positionJoueur = 246;
+// var joueur = $('#joueur').position();
+// joueur.top = 96 * Math.floor(positionJoueur/nombre_case_ligne) + 9 + "px";
+// joueur.left = 96 * (positionJoueur % nombre_case_ligne) + 9 + "px";
+//$('#content').css({top:-96 * Math.floor(positionJoueur/nombre_case_ligne) - 9 + "px",left:-96 * (positionJoueur % nombre_case_ligne) - 9 + "px"})
 var Moving = false;
-var speedJoueur = 50;
+var speedJoueur = 150;
 
 
 
@@ -489,7 +527,7 @@ function lumiere() {
 
     // RIGHT 
     distance = -1;
-    for (j = positionJoueur + 1 ; j < positionJoueur + 4 ; j++)
+    for (j = positionJoueur + 1 ; j < positionJoueur + distance_vue ; j++)
     {
         distance ++;
         if(nombre_case_ligne == j % nombre_case_ligne)
@@ -506,14 +544,14 @@ function lumiere() {
         }
         if(Murs[j][3] == 0 && right == true)
         {
-            $('#case_' + j).css('opacity', 1 - (distance * 0.3));
+            $('#case_' + j).css('opacity', 1 - (distance * 0.2));
         }
     }
 
 
     // LEFT
     distance = -1;
-    for (j = positionJoueur - 1 ; j > positionJoueur - 4 ; j--)
+    for (j = positionJoueur - 1 ; j > positionJoueur - distance_vue ; j--)
     {
         distance ++;
         if(j < 0)
@@ -526,7 +564,7 @@ function lumiere() {
         }
         if(Murs[j][1] == 0 && left == true)
         {
-            $('#case_' + j).css('opacity', 1 - (distance * 0.3));
+            $('#case_' + j).css('opacity', 1 - (distance * 0.2));
         }
         if(j % nombre_case_ligne == 0)
         {
@@ -536,7 +574,7 @@ function lumiere() {
 
     // BOTTOM
     distance = -1;
-    for (j = positionJoueur + nombre_case_ligne ; j < positionJoueur + (nombre_case_ligne * 4) ; j = j + nombre_case_ligne)
+    for (j = positionJoueur + nombre_case_ligne ; j < positionJoueur + (nombre_case_ligne * distance_vue) ; j = j + nombre_case_ligne)
     {
         distance ++;
         if(j >= nombre_case)
@@ -549,13 +587,13 @@ function lumiere() {
         }
         if(Murs[j][0] == 0 && bottom == true)
         {
-            $('#case_' + j).css('opacity', 1 - (distance * 0.3));
+            $('#case_' + j).css('opacity', 1 - (distance * 0.2));
         }
     }
 
     // TOP
     distance = -1;
-    for (j = positionJoueur - nombre_case_ligne ; j > positionJoueur - (nombre_case_ligne * 4) ; j = j - nombre_case_ligne)
+    for (j = positionJoueur - nombre_case_ligne ; j > positionJoueur - (nombre_case_ligne * distance_vue) ; j = j - nombre_case_ligne)
     {
         distance ++;
         if(j < 0)
@@ -568,7 +606,53 @@ function lumiere() {
         }
         if(Murs[j][2] == 0 && top == true)
         {
-            $('#case_' + j).css('opacity', 1 - (distance * 0.3));
+            $('#case_' + j).css('opacity', 1 - (distance * 0.2));
         }
     }
 }
+
+var dixieme = 0;
+var seconde = 0;
+var minute = 0;
+
+function chrono()
+{
+    dixieme++;
+    if(dixieme > 9)
+    {
+        dixieme = 0;
+        seconde++;
+        console.log(seconde);
+    }
+    if(seconde > 59)
+    {
+        seconde = 0;
+        minute ++;
+    }
+
+    compte = setTimeout('chrono()',100);
+}
+
+// chrono();
+
+// var pourcent_life = parseInt((100 * parseInt(vie))/20) + '%';
+// $('#barre_vie_joueur').css('width', pourcent_life);
+
+var faim = 20
+
+//var always_1 = setInterval(faim(), 20000);
+
+function gestion_faim() {
+    console.log("blob");
+    faim = faim - 1;
+    var pourcent_faim = parseInt((100 * parseInt(faim))/20) + '%'
+    $('#barre_vie_joueur').css('width', pourcent_faim);
+    if(faim == 0) 
+    {
+        console.log("fin")
+        return;
+    }
+    var tic_tac = setTimeout("gestion_faim()", 8 00);
+}
+
+gestion_faim();
