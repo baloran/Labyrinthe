@@ -1,0 +1,67 @@
+html{
+	background-color: black;
+	overflow: hidden;
+}
+
+*{
+	margin:0px;
+	padding:0px;
+}
+
+table{
+	border-spacing:0px;
+	border:none;
+}
+
+td{
+	padding:0px;
+}
+
+#content{
+	position:absolute;
+	z-index: 10;
+}
+
+.case{
+	width:90px;
+	height:90px;
+	background-color:#0d0a02;
+	border-top-width:3px;
+	border-top-style:solid;
+	border-top-color:#063415;
+	border-bottom-width:3px;
+	border-bottom-style:solid;
+	border-bottom-color:#063415;
+	border-right-width:3px;
+	border-right-style:solid;
+	border-right-color:#063415;
+	border-left-width:3px;
+	border-left-style:solid;
+	border-left-color:#063415;
+	margin:0px;
+	padding:0px;
+}
+
+#joueur{
+	width:80px;
+	height:80px;
+	background-color: blue;
+	position:relative;
+	top:297px;
+	left:585px;
+	z-index: 50;
+}
+
+#cache{
+	background-color: black;
+	left:0px; right:0;
+	top:0px; bottom:0;
+	z-index:100;
+	position:absolute;
+	opacity: 0.5;
+}
+
+td div{
+	opacity: 0;
+}
+
