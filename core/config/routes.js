@@ -24,13 +24,14 @@ module.exports.routes = {
 
 	// Make the view located at `views/homepage.ejs` (or `views/homepage.jade`, etc. depending on your
 	// default view engine) your home page.
-	// 
+	//
 	// (Alternatively, remove this and add an `index.html` file in your `assets` directory)
 
 	'GET /': "UserController.login",
 	'POST /login': "UserController.process",
 	'POST /register': "UserController.register",
 	'GET /profil/:username': "UserController.profil",
+    'GET /profil':'UserController.mine',
 	'POST /sites/update':"SitesController.update",
 	'GET /sites':"SitesController.index",
 
@@ -48,10 +49,13 @@ module.exports.routes = {
 	'POST /ennemy/add': "EnnemyController.create",
 	'GET /ennemy/delete/:id': "EnnemyController.delete",
 
-	// Custom routes here...
+	// Party
+    'GET /party/room':'PartyController.room',
+    'GET /party/room/:name':'PartyController.enter',
+    'GET /party/room/leave/:name':'PartyController.leave'
 
 
-	// If a request to a URL doesn't match any of the custom routes above, it is matched 
+	// If a request to a URL doesn't match any of the custom routes above, it is matched
 	// against Sails route blueprints.  See `config/blueprints.js` for configuration options
 	// and examples.
 

@@ -30,6 +30,13 @@ passport.use(new LocalStrategy(
 				if (!res) return done(null, false, {
 					message: 'Invalid Password'
 				});
+				console.log();
+				sails.session.username = username;
+				sails.session.admin = true;
+				console.log(user);
+				if (user.role == '1') {
+					sails.session.admin = true;
+				}
 				return done(null, user);
 			});
 		});

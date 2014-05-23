@@ -16,21 +16,21 @@
  */
 
 module.exports = {
-    
+
 	index:function(req,res){
 		var data;
 		Sites.findOne(1,function(err,options){
 			if (err) console.log(err);
 			data = options;
-		})
-		res.view({'data':data})
+		});
+		res.view({'data':data});
 	},
 
 	update:function(req,res){
 		Sites.update(1,req.params.all(),function(err,data){
 			if (err) console.log(err);
 			res.redirect('/sites');
-		})
+		});
 	},
 
 
@@ -40,5 +40,5 @@ module.exports = {
    */
   _config: {}
 
-  
+
 };

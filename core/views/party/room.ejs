@@ -1,0 +1,19 @@
+<h3>Room dispnible</h3>
+
+<p>
+    Ici vous trouverez chaque partie disponible qui sont déjà en cour ou qui vont commencer.
+</p>
+
+<form id="create_room" action="#" method="post">
+    <input type="text" name="room_name" id="room_name" value="">
+    <input type="submit" name="some_name" value="">
+</form>
+
+<% _.each(data, function(d){ %>
+
+    <h4><%= d %></h4>
+    <p><%= d.desc %></p>
+    <i>Partie commencer il y à <%= d.date %></i>
+
+
+<% }) %>

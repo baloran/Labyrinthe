@@ -11,7 +11,7 @@ module.exports = {
 		var username = req.param('username');
 		var password = req.param('password');
 		var email = req.param('mail');
-		console.log(req.params.all())
+        User.findOne()
 		User.create({
 			'mail': email,
 			'username': username,
@@ -26,38 +26,61 @@ module.exports = {
 	},
 
 	login: function(req, res) {
+        console.log(sails.sockets);
 		res.view({
 			data: 'Coucou'
-		})
+		});
 	},
 
 	process: function(req, res) {
 		passport.authenticate('local', function(err, user, info) {
 			if ((err) || (!user)) {
-				res.redirect('/login');
+				res.redirect('/');
 				return;
 			}
 			req.logIn(user, function(err) {
 				if (err) {
-					res.redirect('/login');
+					res.redirect('/');
 				}
-				return res.redirect('/');
+                req.session.authenticated = true;
+                req.session.username = req.param('username');
+				return res.redirect('/profil');
 			});
 		})(req, res);
 	},
 
 	profil: function(req, res) {
-		var username = req.param('username');
+		var slug = req.param('username');
 		User.findOne({
-			'username': username
+			'slug': slug
 		}, function(err, data) {
 			if (err) {
 				console.log("Erreur: " + err);
-			};
+			}
 			console.log(data);
 			res.view({
 				'data': data
 			});
-		})
-	}
+		});
+	},
+
+    getData:function(req,res){
+        var username = req.param('username');
+        User.findOne({
+            'username': username
+        },function(err,data){
+            if (err) {
+                res.json(err);
+            }
+            if (data) {
+                res.json(data);
+            }else{
+                res.json("Pas d'utilisateur !");
+            }
+        });
+    },
+
+    mine:function(req,res){
+        console.log(req.session);
+    }
 };

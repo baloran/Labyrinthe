@@ -15,22 +15,32 @@ module.exports = {
 			unique: true
 		},
 		'username': {
-			type: 'STRING',
+			type: 'string',
 			required: true,
 			unique: true
 		},
 		'password': {
-			type: 'STRING',
+			type: 'string',
 			required: true
 		},
+        'role':{
+            type:'int',
+            defaultsTo:'0',
+        },
+        'slug':{
+            type:'string',
+        },
 		'exp': {
 			type: 'int',
+            defaultsTo:'0'
 		},
 		'nbr_win': {
 			type: 'int',
+            defaultsTo:'0'
 		},
 		'nbr_play': {
 			type: 'int',
+            defaultsTo:'0'
 		},
 		'first_connection': {
 			type: 'datetime',
@@ -42,17 +52,7 @@ module.exports = {
 			type: 'STRING'
 		},
 		'save': {
-			'name': {
-				type: 'STRING',
-				required: true
-			},
-			'id': {
-				type: 'STRING',
-				required: true
-			},
-			'state': {
-				type: 'int'
-			}
+            type:'json'
 		}
 	},
 
@@ -66,10 +66,10 @@ module.exports = {
 
 
 	beforeCreate: function(user, cb) {
-		bcrypt.genSalt(10, function(err, salt) {
+		// Password encryption
+        bcrypt.genSalt(10, function(err, salt) {
 			bcrypt.hash(user.password, salt, function(err, hash) {
 				if (err) {
-					console.log(err);
 					cb(err);
 				} else {
 					user.password = hash;
@@ -77,5 +77,7 @@ module.exports = {
 				}
 			});
 		});
-	}
+
+
+	},
 };

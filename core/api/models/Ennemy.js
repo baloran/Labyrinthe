@@ -13,6 +13,10 @@ module.exports = {
 			required: true
 		},
 
+        'slug':{
+            type:'string'
+        },
+
 		'desc': {
 			type: 'text',
 			required: true,
@@ -25,5 +29,13 @@ module.exports = {
 		'range': {
 			type: 'int',
 		}
-	}
+	},
+
+    beforeCreate:function(ennemy,next){
+        // Slug creation
+        if (!ennemy.name) {
+            return next({err:["No ennemy name !"]});
+        }
+        ennemy.slug = ennemy.name.replace(/\s+/g,'').toLowerCase();
+    },
 };

@@ -15,7 +15,6 @@ module.exports = {
 
 		'slug': {
 			type: 'string',
-			required: true
 		},
 
 		'desc': {
@@ -34,5 +33,13 @@ module.exports = {
 		'defence': {
 			type: 'int',
 		},
-	}
+	},
+
+    beforeCreate:function(item,next){
+        // Slug creation
+        if (!item.name) {
+            return next({err:["No item name !"]});
+        }
+        item.slug = item.name.replace(/\s+/g,'').toLowerCase();
+    },
 };

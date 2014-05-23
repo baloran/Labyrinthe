@@ -13,7 +13,7 @@ module.exports = {
 		}, function(err, Ennemy) {
 			if (err) res.json(err);
 			res.redirect('/ennemy');
-		})
+		});
 	},
 
 	list: function(req, res) {
@@ -27,7 +27,7 @@ module.exports = {
 			} else {
 				res.json("Pas d'objet trouvé");
 			}
-		})
+		});
 	},
 
 	index: function(req, res) {
@@ -37,10 +37,10 @@ module.exports = {
 			if (enemy) {
 				data = enemy;
 			}else{
-				data = "No enemy"
+				data = "No enemy";
 			}
 			res.view('ennemy/add',{'data':data});
-		})
+		});
 	},
 
 	modif: function(req, res) {
@@ -52,11 +52,11 @@ module.exports = {
 			if (data) {
 				res.view({
 					'data': data
-				})
+				});
 			} else {
-				res.json("No Object")
+				res.json("No Object");
 			}
-		})
+		});
 	},
 
 	update: function(req, res) {
@@ -70,7 +70,7 @@ module.exports = {
 			} else {
 				res.json("Pas d'item");
 			}
-		})
+		});
 	},
 
 	delete: function(req,res){
@@ -85,6 +85,6 @@ module.exports = {
 			}else{
 				res.json("No enemy with this id");
 			}
-		})
+		});
 	}
 };

@@ -9,7 +9,7 @@
 module.exports = {
 
   attributes: {
-  	
+
   	'title':{
   		type:'string',
   		defaultsTo:'Your name website',
@@ -22,8 +22,13 @@ module.exports = {
   		required:true,
   	},
 
+      'identification':{
+          type:'string',
+          defaultsTo:'site'
+      }
 
-    
+
+
   }
 
 };

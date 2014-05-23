@@ -14,7 +14,7 @@ module.exports = {
 		}, function(err, item) {
 			if (err) res.json(err);
 			res.redirect('/item');
-		})
+		});
 	},
 
 	list: function(req, res) {
@@ -28,7 +28,7 @@ module.exports = {
 			} else {
 				res.json("Pas d'objet trouvé");
 			}
-		})
+		});
 	},
 
 	index: function(req, res) {
@@ -38,10 +38,10 @@ module.exports = {
 			if (item) {
 				data = item;
 			}else{
-				data = "No item"
+				data = "No item";
 			}
 			res.view('item/add',{'data':data});
-		})
+		});
 	},
 
 	modif: function(req, res) {
@@ -53,11 +53,11 @@ module.exports = {
 			if (data) {
 				res.view({
 					'data': data
-				})
+				});
 			} else {
-				res.json("No Object")
+				res.json("No Object");
 			}
-		})
+		});
 	},
 
 	update: function(req, res) {
@@ -71,7 +71,7 @@ module.exports = {
 			} else {
 				res.json("Pas d'item");
 			}
-		})
+		});
 	},
 
 	delete: function(req,res){
@@ -86,6 +86,6 @@ module.exports = {
 			}else{
 				res.json("No item with this id");
 			}
-		})
+		});
 	}
 };
