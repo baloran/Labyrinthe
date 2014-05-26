@@ -9,11 +9,15 @@
 */
 
 
-var Labyrinthe = function (totalCases, casesPerLine, assets){
+var Labyrinthe = function (totalCases, casesPerLine, assets, level){
 
 	/*
 		Propriétés
 	*/
+
+	//	Identite dans le jeu
+
+		this.level = level;
 
 	//	Dimensions
 
@@ -39,9 +43,11 @@ var Labyrinthe = function (totalCases, casesPerLine, assets){
 		this.html = null;
 		this.assets = assets;
 
-	//	Gestion du héros
+	//	Gestion des personnages
 
+		this.persosPositions = new Array(totalCases);
 		this.heros = null;
+		this.mechantsBasiques = new Array();
 
 
 	/*
@@ -272,8 +278,11 @@ var Labyrinthe = function (totalCases, casesPerLine, assets){
 		}
 
 		function generatePersos (l){
-			var mechant = new PersoMechant(l, "mechant1", 100);
-			console.log(mechant);
+			if(l.level != null){
+				for(var i=0; i<l.level*3; i++){
+					l.mechantsBasiques[i] = new PersoMechant(l, "mechant"+i, chiffre_aleatoire(l.dimensions.totalCases));
+				}
+			}
 		}
 
 	//	Fonction Callbacks de la map
@@ -282,9 +291,9 @@ var Labyrinthe = function (totalCases, casesPerLine, assets){
 			// Test de la fin du labyrinthe
 			if(l.heros.position == l.sortie){
 				alert("c'est fini");
-			}else{
-				l.heros.isMoving = false;
 			}
+			l.heros.luminosite();
+			l.heros.isMoving = false;
 		}
 
 

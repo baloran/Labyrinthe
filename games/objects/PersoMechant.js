@@ -7,15 +7,13 @@ var PersoMechant = function (lab, id, position){
 
 	var perso = new PersoProta(lab, id, position);
 
-
-
 	/*
 		Propriétés
 	*/
 
 	//	Déplacacements
 
-		perso.timer = setInterval(function(){perso.deplacement();}, 2000);
+		perso.timer = setInterval(function(){perso.deplacement();}, 1000);
 
 	/*
 		Méthodes

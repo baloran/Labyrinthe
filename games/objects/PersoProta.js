@@ -30,6 +30,7 @@ var PersoProta = function (lab, id, position){
 			height: perso.lab.dimensions.caseWidth-6
 		});
 		$('#characters').append(perso.html);
+		perso.lab.persosPositions[perso.position] = perso;
 
 
 	/*
@@ -54,6 +55,13 @@ var PersoProta = function (lab, id, position){
 			}
 			var position = (positionY+y)*perso.lab.dimensions.casesPerLine+(positionX+x);
 			perso.position = position;
+			perso.lab.persosPositions[position] = perso;
+		}
+
+	//	Rencontre avec le héros
+
+		perso.meet = function (heros){
+			
 		}
 
 
