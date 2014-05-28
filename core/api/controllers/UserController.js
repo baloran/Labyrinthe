@@ -11,7 +11,7 @@ module.exports = {
 		var username = req.param('username');
 		var password = req.param('password');
 		var email = req.param('mail');
-        User.findOne()
+        User.findOne();
 		User.create({
 			'mail': email,
 			'username': username,
@@ -82,5 +82,18 @@ module.exports = {
 
     mine:function(req,res){
         console.log(req.session);
+    },
+
+    giveMoney: function(req,res){
+        User.findOne({id:req.param('id')},function(err,user){
+            user.money += req.param('money');
+        });
+    },
+
+    giveExp: function(req,res){
+
+        User.findOne({id:req.param('id')},function(err,user){
+            user.exp += req.param('exp');
+        });
     }
 };

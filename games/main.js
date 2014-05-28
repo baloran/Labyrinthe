@@ -1,7 +1,7 @@
 $(document).ready(function(){
-	var socket = io.connect("http://10.30.187.175:1337");
+	var socket = io.connect("http://localhost:1337");
 	socket.on("connect",function(){
-	// Room actuelle 
+	// Room actuelle
 	var currentRoom = false;
 
 	// Récupération des rooms
@@ -20,18 +20,22 @@ $(document).ready(function(){
 	$(document).on("click","#rooms li .connect",function(e){
 		alert('vous allez vous connecter à la room');
 		e.preventDefault();
-		socket.emit("new_room",{'room':'partie1'});
+		socket.emit("new_room",{'room':'partie2'});
 	});
 
 	$(document).on("click", "#rooms li .launch", function (e){
 		alert('vous allez lancer la partie');
 		e.preventDefault();
-		socket.emit("launch_room", {'room': 'partie1'});
+		socket.emit("launch_room", {'room': 'partie2'});
 	});
-	
-		socket.on("salut",function (data){
-			console.log(data);
-		});
+
+
+	socket.on("envoyer_message",function (data){
+		var lab = new Labyrinthe(300, 60, null, 6);
+		$('#rooms').hide();
+		$('#game').show();
+		lab.construct();
+	});
 
 		socket.on("launch_game", function (data){
 			console.log(data);

@@ -52,7 +52,12 @@ module.exports.routes = {
 	// Party
     'GET /party/room':'PartyController.room',
     'GET /party/room/:name':'PartyController.enter',
-    'GET /party/room/leave/:name':'PartyController.leave'
+    'GET /party/room/leave/:name':'PartyController.leave',
+    'GET /api/getRoom/':'PartyController.getRoom',
+
+    // API
+    'POST /giveExp': 'UserController.giveExp',
+    'POST /giveMoney': 'UserController.giveMoney',
 
 
 	// If a request to a URL doesn't match any of the custom routes above, it is matched

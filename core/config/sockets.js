@@ -15,17 +15,28 @@ module.exports.sockets = {
   // Keep in mind that Sails' RESTful simulation for sockets
   // mixes in socket.io events for your routes and blueprints automatically.
   onConnect: function(session, socket) {
-    console.log("************OnConnect***********")
+    console.log("************OnConnect***********");
+
     socket.on("new_room",function(data){
         if (session.room) {
             socket.emit("alreadyInRoom",session.room);
         }else{
             session.room = data.room;
+            // console.log(socket.clients('partie1').lenght)
             socket.join(data.room);
         }
-        console.log(session)
     });
 
+    socket.on("envoyer_message",function(data){
+        socket.broadcast.to('partie1').emit('updatechat', 'SERVER coucou');
+    })
+    socket.on('send',function(){
+        socket.broadcast.to("partie1").emit('envoyer_message',{"coucou":"juste un petit coucou"});
+    });
+
+    socket.on("launch_room",function(){
+        socket.get("/party/launch");
+    });
     console.log("***********************")
   },
 
@@ -53,7 +64,7 @@ module.exports.sockets = {
 
   // Use this option to set the datastore socket.io will use to manage rooms/sockets/subscriptions:
   // default: memory
-  adapter: 'mongome',
+  adapter: 'memory',
 
 
   // Node.js (and consequently Sails.js) apps scale horizontally.
@@ -71,10 +82,10 @@ module.exports.sockets = {
   // Luckily, Socket.io (and consequently Sails.js) apps support Redis for sockets by default.
   // To enable a remote redis pubsub server:
   // adapter: 'redis',
-  // host: '127.0.0.1',
-  // port: 6379,
-  // db: 'sails',
-  // pass: '<redis auth password>'
+  // host: 'pub-redis-10268.us-east-1-3.3.ec2.garantiadata.com',
+  // port: 10268,
+  // db: 'labyrinthe',
+  // pass: 'test',
   // Worth mentioning is that, if `adapter` config is `redis`,
   // but host/port is left unset, Sails will try to connect to redis
   // running on localhost via port 6379

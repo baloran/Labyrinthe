@@ -34,6 +34,10 @@ module.exports = {
 			type: 'int',
             defaultsTo:'0'
 		},
+        'money':{
+            type:'int',
+            defaultsTo:'0'
+        },
 		'nbr_win': {
 			type: 'int',
             defaultsTo:'0'
