@@ -29,7 +29,7 @@ $(document).ready(function(){
 		socket.emit("launch_room", {'room': 'partie1'});
 	});
 	
-		socket.on("envoyer_message",function (data){
+		socket.on("salut",function (data){
 			console.log(data);
 		});
 
