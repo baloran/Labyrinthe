@@ -45,15 +45,16 @@ var PersoProta = function (lab, id, position){
 			if(animated){
 				perso.html.animate({
 					top: (positionY + y)*perso.lab.dimensions.caseWidth,
-					left: (positionX + x)*(perso.lab.dimensions.caseWidth+1)
+					left: (positionX + x)*(perso.lab.dimensions.caseWidth+0.8)
 				});
 			}else{
 				perso.html.css({
 					top: y*perso.lab.dimensions.caseWidth,
-					left: x*(perso.dimensions.caseWidth+1)
+					left: x*(perso.dimensions.caseWidth+0.8)
 				});
 			}
 			var position = (positionY+y)*perso.lab.dimensions.casesPerLine+(positionX+x);
+			perso.lab.persosPositions[perso.position] = null;
 			perso.position = position;
 			perso.lab.persosPositions[position] = perso;
 		}
@@ -61,8 +62,8 @@ var PersoProta = function (lab, id, position){
 	//	Rencontre avec le héros
 
 		perso.meet = function (heros){
-			
-		}
+			// Fonction de base de rencontre avec le heros
+		};
 
 
 

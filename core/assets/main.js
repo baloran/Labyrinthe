@@ -18,9 +18,9 @@ $(document).ready(function(){
 	});
 
 	$(document).on("click","#rooms li .connect",function(e){
-		alert('vous allez vous connecter à la room');
 		e.preventDefault();
-		socket.emit("new_room",{'room':'partie2'});
+
+		socket.emit("connect_room",{'room':'partie2'});
 	});
 
 	$(document).on("click", "#rooms li .launch", function (e){
@@ -32,7 +32,10 @@ $(document).ready(function(){
 		$('#game').show();
 		lab.construct();
 		console.log(lab);
-		socket.post("/party/launch", {'mur':JSON.stringify(lab.murs)});
+		socket.post("/party/launch", {
+			'mur':lab,
+			'room': $(this).attr("href"),
+		});
 	});
 
 
@@ -42,16 +45,22 @@ $(document).ready(function(){
 
 	socket.on('salut',function(data){
 		console.log(data);
-	})
+	});
 
 	socket.on("launch_game", function (data){
 		console.log(data);
+	});
+
+	socket.on("room_created",function(data){
+		$('#rooms ul').append('<li><a class="connect" href="'+data.room+'">'+data.room+'</a><a class="launch" href="'+data.room+'">Launch</a></li>');
 	});
 
 	});
 
 	$('#rooms > a').click(function (e){
 		var name = prompt("Veuillez choisir un nom pour la room");
+		sessionStorage.setItem("room",name);
+		socket.emit("new_room",{'room':name});
 		e.preventDefault();
 	});
 

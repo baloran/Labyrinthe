@@ -10,9 +10,11 @@ var Perso = function (lab){
 		Propriétés
 	*/
 
-	//	Position
+	//	Identité
 
 		this.position = null;
+		this.life = 100;
+
 
 	//	Référence au labyrinthe
 

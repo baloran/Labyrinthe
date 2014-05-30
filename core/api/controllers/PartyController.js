@@ -20,7 +20,7 @@ module.exports = {
     join:function(req,res){
         sails.sockets.join(req.socket,'partie2');
         console.log('Il ets connecter a la room');
-        sails.sockets.broadcast('partie2', 'salut', {msg: 'nouvel utilisateur dans la room'});
+        sails.sockets.broadcast("partie2", 'salut', {msg: 'nouvel utilisateur dans la room'});
     },
 
     leave: function(req,res){
@@ -40,7 +40,7 @@ module.exports = {
     launch: function(req,res){
         var jeu = req.param('mur');
         console.log(jeu);
-        sails.sockets.broadcast('partie2', 'start_game', {"lab":jeu},req.socket);
+        sails.sockets.broadcast(req.param("room"), 'start_game', jeu,req.socket);
     },
 
     my:function(req,res){

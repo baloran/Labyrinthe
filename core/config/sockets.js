@@ -24,6 +24,7 @@ module.exports.sockets = {
             session.room = data.room;
             // console.log(socket.clients('partie1').lenght)
             socket.join(data.room);
+            socket.broadcast.emit("room_created",data);
         }
     });
 

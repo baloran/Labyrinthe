@@ -11,9 +11,9 @@ var PersoMechant = function (lab, id, position){
 		Propriétés
 	*/
 
-	//	Déplacacements
+	// Identité
 
-		perso.timer = setInterval(function(){perso.deplacement();}, 1000);
+		perso.degats = 30;
 
 	/*
 		Méthodes
@@ -40,6 +40,12 @@ var PersoMechant = function (lab, id, position){
 
 		    perso.moveOnMap(mouvement.x, mouvement.y, true);
 		}
+
+	// Collision
+
+		perso.meet = function (heros){
+			heros.attacked(perso.degats);
+		};
 
 
 	return perso;

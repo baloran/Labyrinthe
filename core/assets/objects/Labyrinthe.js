@@ -9,7 +9,7 @@
 */
 
 
-var Labyrinthe = function (totalCases, casesPerLine, assets, level){
+var Labyrinthe = function (totalCases, casesPerLine, assets, level, online){
 
 	/*
 		Propriétés
@@ -18,6 +18,8 @@ var Labyrinthe = function (totalCases, casesPerLine, assets, level){
 	//	Identite dans le jeu
 
 		this.level = level;
+		this.online = online;
+		var that = this;
 
 	//	Dimensions
 
@@ -47,14 +49,21 @@ var Labyrinthe = function (totalCases, casesPerLine, assets, level){
 
 		this.persosPositions = new Array(totalCases);
 		this.heros = null;
-		this.mechantsBasiques = new Array();
+		this.protagonistes = new Array();
+
+	// Gestion du timer
+
+		this.timer = null;
+		if(this.online == false){
+			setInterval(function(){that.mouvementsMechants(); that.collisions();}, 1000);
+		}
 
 
 	/*
 		Méthodes
 	*/
 
-	//	Construction de la structure du labyrinthe
+	//	Construction du labyrinthe
 
 		this.construct = function (){
 
@@ -84,6 +93,12 @@ var Labyrinthe = function (totalCases, casesPerLine, assets, level){
 		    labyrinthe(0, this);
 		};
 
+		this.launch = function (){
+			// commentaire
+			generatePersos(this);
+		};
+
+
 	//	Déplacement de la map
 
 		this.moveMap = function (position){
@@ -95,8 +110,35 @@ var Labyrinthe = function (totalCases, casesPerLine, assets, level){
 			var perso = this.heros;
 			map.animate({
 				top: -y*this.dimensions.caseWidth,
-				left: -x*(this.dimensions.caseWidth+1)
+				left: -x*(this.dimensions.caseWidth+0.8)
 			}, mapEndedMoving(this));
+		};
+
+	// Personnages
+
+		this.generateHeros = function (){
+			var width = $('td').width();
+			this.heros = new PersoHero(this);
+			var dimensions = this.dimensions;
+			$("#joueur").css({
+				width: width - 6,
+				height: width - 6,
+				top: Math.floor(($(window).height()/dimensions.caseWidth)/2)*width+3,
+				left: (($(window).width()/2) - width/2)+3
+			});
+			this.moveMap(this.heros.position);
+		}
+
+		this.mouvementsMechants = function (){
+			for(var i=0; i<this.protagonistes.length; i++){
+				this.protagonistes[i].deplacement();
+			}
+		};
+
+		this.collisions = function (){
+			if(this.persosPositions[this.heros.position] != null){
+				this.persosPositions[this.heros.position].meet(this.heros);
+			}
 		};
 
 
@@ -259,33 +301,21 @@ var Labyrinthe = function (totalCases, casesPerLine, assets, level){
 				width: dimensions.caseWidth,
 				height: dimensions.caseWidth
 			});
-		    //lumiere();
-		    generateHero(l);
-		}
-
-		function generateHero (l){
-			var width = $('td').width();
-			l.heros = new PersoHero(l);
-			var dimensions = l.dimensions;
-			$("#joueur").css({
-				width: width - 6,
-				height: width - 6,
-				top: Math.floor(($(window).height()/dimensions.caseWidth)/2)*width+3,
-				left: (($(window).width()/2) - width/2)+3
-			});
-			l.moveMap(l.heros.position);
-			generatePersos(l);
 		}
 
 		function generatePersos (l){
 			if(l.level != null){
 				for(var i=0; i<l.level*3; i++){
-					l.mechantsBasiques[i] = new PersoMechant(l, "mechant"+i, chiffre_aleatoire(l.dimensions.totalCases));
+					l.protagonistes[i] = new PersoMechant(l, "mechant"+i, chiffre_aleatoire(l.dimensions.totalCases));
 				}
 			}
 		}
 
-	//	Fonction Callbacks de la map
+	/*
+		Callbacks
+	*/ 
+
+	// Map
 
 		function mapEndedMoving(l){
 			// Test de la fin du labyrinthe
@@ -295,6 +325,11 @@ var Labyrinthe = function (totalCases, casesPerLine, assets, level){
 			l.heros.luminosite();
 			l.heros.isMoving = false;
 		}
+
+
+
+
+
 
 
 
