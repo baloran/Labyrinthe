@@ -12,7 +12,7 @@ var PersoHero = function (lab){
 		Initialisation des propriétés
 	*/
 
-	//	Position
+	//	Identité
 
 		perso.position = chiffre_aleatoire(perso.lab.dimensions.totalCases);
 
@@ -66,6 +66,25 @@ var PersoHero = function (lab){
 		    	perso.lab.moveMap(perso.position);
 		    }
 		    afterMoving(perso);
+		};
+
+	// Gestion des attaques
+
+		// Subir une attaque
+
+		perso.attacked = function (degats){
+			if(perso.life > 0){
+				perso.life = perso.life - degats;
+			}else{
+				perso.die();
+			}
+		};
+
+		// Mourrir
+
+		perso.die = function (){
+			//Mourir
+			console.log('die');
 		};
 
 
@@ -207,12 +226,15 @@ var PersoHero = function (lab){
 	//	Callbacks
 
 		function afterMoving (perso){
-			perso.lab.persosPositions[perso.position].meet(perso);
-		}
+			// Gestion des collisions
+			perso.lab.collisions();
 
+			// Gestion du mode online
+			if(perso.lab.online = true){
+				
+			}
+		};
 
-
-	
 
 	return perso;
 
