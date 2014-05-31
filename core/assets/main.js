@@ -23,8 +23,8 @@ $(document).ready(function(){
 
 	$(document).on("click","#rooms li .connect",function(e){
 		e.preventDefault();
-
-		socket.emit("connect_room",{'room':'partie2'});
+		var name = $(this).attr("href");
+		socket.emit("join_room",{'room':name});
 	});
 
 	$(document).on("click", "#rooms li .launch", function (e){
@@ -61,6 +61,10 @@ $(document).ready(function(){
 		console.log(laby.dimensions);
 	});
 
+	socket.on("nouvel_utilisateur",function(data){
+		console.log(data);
+	})
+
 	socket.on("room_created",function(data){
 		$('#rooms ul').append('<li><a class="connect" href="'+data.room+'">'+data.room+'</a><a class="launch" href="'+data.room+'">Launch</a></li>');
 	});
@@ -71,6 +75,7 @@ $(document).ready(function(){
 		var name = prompt("Veuillez choisir un nom pour la room");
 		sessionStorage.setItem("room",name);
 		socket.emit("new_room",{'room':name});
+		$('#rooms ul').append('<li><a class="connect" href="'+name+'">'+name+'</a><a class="launch" href="'+name+'">Launch</a></li>');
 		e.preventDefault();
 	});
 

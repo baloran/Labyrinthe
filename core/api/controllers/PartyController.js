@@ -18,9 +18,10 @@ module.exports = {
     },
 
     join:function(req,res){
-        sails.sockets.join(req.socket,'partie2');
+        var room = req.param('room');
+        sails.sockets.join(req,room);
         console.log('Il ets connecter a la room');
-        sails.sockets.broadcast("partie2", 'salut', {msg: 'nouvel utilisateur dans la room'});
+        sails.sockets.broadcast(room, 'nouvel_utilisateur', {msg: 'nouvel utilisateur dans la room'},req.socket);
     },
 
     leave: function(req,res){

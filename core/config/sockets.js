@@ -28,6 +28,17 @@ module.exports.sockets = {
         }
     });
 
+    socket.on("join_room",function(data){
+        if (session.room) {
+            socket.emit("alreadyInRoom",session.room);
+        }else{
+            session.room = data.room;
+            // console.log(socket.clients('partie1').lenght)
+            socket.join(data.room);
+            socket.broadcast.to(data.room).emit("nouvel_utilisateur",{"message":"nouvel utilisateur :)"});
+        }
+    });
+
     socket.on("envoyer_message",function(data){
         socket.broadcast.to('partie1').emit('updatechat', 'SERVER coucou');
     })
@@ -213,7 +224,7 @@ module.exports.sockets = {
   // Should be set to true when you want the location handshake to match the protocol of the origin.
   // This fixes issues with terminating the SSL in front of Node
   // and forcing location to think it's wss instead of ws.
-  'match origin protocol': false,
+  'match origin protocol': true,
 
   // Direct access to the socket.io MQ store config
   // The 'adapter' property is the preferred method
