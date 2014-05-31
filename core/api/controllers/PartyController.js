@@ -14,7 +14,7 @@ module.exports = {
     },
 
     start: function(req,res){
-        res.view();
+        res.view({layout:null});
     },
 
     join:function(req,res){

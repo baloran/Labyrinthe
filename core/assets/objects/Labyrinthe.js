@@ -95,7 +95,7 @@ var Labyrinthe = function (totalCases, casesPerLine, assets, level, online){
 
 		this.launch = function (){
 			// commentaire
-			generatePersos(this);
+			affichage(this);
 		};
 
 
@@ -301,9 +301,14 @@ var Labyrinthe = function (totalCases, casesPerLine, assets, level, online){
 				width: dimensions.caseWidth,
 				height: dimensions.caseWidth
 			});
+
+			if(l.online = false){
+				generatePersos(l);
+			}
 		}
 
 		function generatePersos (l){
+			alert
 			if(l.level != null){
 				for(var i=0; i<l.level*3; i++){
 					l.protagonistes[i] = new PersoMechant(l, "mechant"+i, chiffre_aleatoire(l.dimensions.totalCases));

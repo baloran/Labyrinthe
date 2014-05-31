@@ -1,4 +1,8 @@
 $(document).ready(function(){
+
+	var laby = null;
+
+
 	var socket = io.connect("http://localhost:1337");
 	socket.on("connect",function(){
 	// Room actuelle
@@ -27,28 +31,34 @@ $(document).ready(function(){
 		alert('vous allez lancer la partie');
 		e.preventDefault();
 		var g = {};
-		lab = new Labyrinthe(300, 60, null, 6);
+		lab = new Labyrinthe(300, 60, null, 6, true);
 		$('#rooms').hide();
 		$('#game').show();
 		lab.construct();
-		console.log(lab);
 		socket.post("/party/launch", {
 			'mur':lab,
 			'room': $(this).attr("href"),
 		});
+		laby = lab;
+		laby.generateHeros();
+		laby.launch();
+		console.log(laby.dimensions);
 	});
 
 
 	socket.on("start_game",function (data){
-		console.log(data);
-	});
-
-	socket.on('salut',function(data){
-		console.log(data);
-	});
-
-	socket.on("launch_game", function (data){
-		console.log(data);
+		laby = new Labyrinthe(300, 60, null, 6, "host");
+		$('#rooms').hide();
+		$('#game').show();
+		laby.murs = data.murs;
+		laby.sortie = data.sortie;
+		laby.html = data.html;
+		laby.persosPosition = data.persosPosition;
+		laby.protagonistes = data.protagonistes;
+		$('#content').append($(data.html));
+		laby.generateHeros();
+		laby.launch();
+		console.log(laby.dimensions);
 	});
 
 	socket.on("room_created",function(data){
