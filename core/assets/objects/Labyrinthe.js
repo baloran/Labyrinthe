@@ -50,6 +50,7 @@ var Labyrinthe = function (totalCases, casesPerLine, assets, level, online, call
 		this.persosPositions = new Array(totalCases);
 		this.heros = null;
 		this.protagonistes = new Array();
+		this.adversaires = new Array();
 
 	// Gestion du timer
 
@@ -120,7 +121,7 @@ var Labyrinthe = function (totalCases, casesPerLine, assets, level, online, call
 
 	// Personnages
 
-		this.generateHeros = function (){
+		this.generateHeros = function (name){
 			var width = $('td').width();
 			this.heros = new PersoHero(this);
 			var heros = this.heros;
@@ -132,10 +133,11 @@ var Labyrinthe = function (totalCases, casesPerLine, assets, level, online, call
 				left: (($(window).width()/2) - width/2)+3
 			});
 			if(this.online != false){
-				socket.post('party/sendData',{
-					'room': this.online.room, // Obligatoire
+				socket.post('/party/sendData',{
+					'room': "Test", //this.online.room, // Obligatoire
 					'type':'initPosition', // ce que tu envoie par exemple si c'est un mouvement
-					'case': heros.position, // enfin tu fous ce que tu veut
+					'case': heros.position, // enfin tu fous ce que tu veut,
+					'id': name
 				});
 			}
 			this.moveMap(this.heros.position);
@@ -155,7 +157,8 @@ var Labyrinthe = function (totalCases, casesPerLine, assets, level, online, call
 		};
 
 		this.addAdversaire = function (id, position){
-
+			var perso = new PersoProta(this, id, position);
+			this.adversaires[id] = perso;
 		};
 
 
@@ -321,7 +324,7 @@ var Labyrinthe = function (totalCases, casesPerLine, assets, level, online, call
 		}
 
 		function generatePersos (l){
-			if(l.level != null){
+			if(l.level != null && l.online == false){
 				for(var i=0; i<l.level*3; i++){
 					l.protagonistes[i] = new PersoMechant(l, "mechant"+i, chiffre_aleatoire(l.dimensions.totalCases));
 				}

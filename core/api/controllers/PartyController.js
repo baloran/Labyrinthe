@@ -17,7 +17,8 @@ module.exports = {
     },
 
     join:function(req,res){
-        var room = req.param('room');
+        //var room = req.param('room');
+        var room = "Test";
         sails.sockets.join(req,room);
         sails.sockets.broadcast(room, 'nouvel_utilisateur', {msg: 'nouvel utilisateur dans la room'},req.socket);
     },
@@ -35,12 +36,12 @@ module.exports = {
     sendData: function(req,res){
         var name = req.param('room');
         console.log("hello");
-        sails.sockets.broadcast(name, 'send_data', req.params.all(),req.socket);
+        sails.sockets.broadcast("Test", 'send_data', req.params.all(),req.socket);
     },
 
     launch: function(req,res){
         var jeu = req.param('mur');
-        sails.sockets.broadcast(req.param("room"), 'start_game', jeu,req.socket);
+        sails.sockets.broadcast("Test", 'start_game', jeu,req.socket);
     },
 
     my:function(req,res){

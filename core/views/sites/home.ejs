@@ -146,6 +146,7 @@
 
 		var game = {
 			currentLab: null,
+			pseudo: null,
 			solo: {
 				level : 1
 			},
@@ -251,27 +252,29 @@
 
 		$(document).on("click","#rooms li .connect",function(e){
 			e.preventDefault();
-			var name = $(this).attr("href").substring(1);
+			game.pseudo = prompt("Choisissez un pseudo");
+			var name = "Test";
 			socket.emit("join_room",{'room':name});
 		});
 
 		$(document).on("click", "#rooms li .launch", function (e){
 			e.preventDefault();
 			var g = {};
-			lab = new Labyrinthe(300, 60, null, 6, {room: $(this).attr("href").substring(1)}, function (result){
+			if(game.pseudo == null){
+				game.pseudo = prompt("Choisissez un pseudo");
+			}
+			game.currentLab = new Labyrinthe(300, 60, null, 6, {room: $(this).attr("href").substring(1)}, function (result){
 				alert(result);
 			});
 			$('#rooms').hide();
 			$('#game').show();
-			lab.construct();
+			game.currentLab.construct();
 			socket.post("/party/launch", {
-				'mur':lab,
-				'room': $(this).attr("href").substring(1),
+				'mur':game.currentLab,
+				'room': "Test",
 			});
-			laby = lab;
-			laby.generateHeros();
-			laby.launch();
-			console.log(laby.dimensions);
+			game.currentLab.generateHeros(game.pseudo);
+			game.currentLab.launch();
 		});
 
 		socket.on("room_created",function(data){
@@ -279,24 +282,27 @@
 		});
 
 		socket.on("start_game",function (data){
-			laby = new Labyrinthe(300, 60, null, 6, {room: data.room}, function (result){
+			game.currentLab = new Labyrinthe(300, 60, null, 6, {room: data.room}, function (result){
 				alert(result);
 			});
 			$('#rooms').hide();
 			$('#game').show();
-			laby.murs = data.murs;
-			laby.sortie = data.sortie;
-			laby.html = data.html;
-			laby.persosPosition = data.persosPosition;
-			laby.protagonistes = data.protagonistes;
+			game.currentLab.murs = data.murs;
+			game.currentLab.sortie = data.sortie;
+			game.currentLab.html = data.html;
+			game.currentLab.persosPosition = data.persosPosition;
+			game.currentLab.protagonistes = data.protagonistes;
 			$('#content').append($(data.html));
-			laby.generateHeros();
-			laby.launch();
-			console.log(laby.dimensions);
+			game.currentLab.generateHeros(name);
+			game.currentLab.launch();
 		});
 
 		socket.on("send_data",function(data){
-			console.log('hello');
+			if(data.type == "initPosition"){
+				game.currentLab.addAdversaire(data.id, data.case);
+			}else if(data.type == "move"){
+				console.log(data);
+			}
 		});
 
 		$('a.close').click(function (e){

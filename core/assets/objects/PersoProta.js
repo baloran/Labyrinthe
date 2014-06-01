@@ -27,7 +27,8 @@ var PersoProta = function (lab, id, position){
 			top: y*perso.lab.dimensions.caseWidth,
 			left: x*(perso.lab.dimensions.caseWidth+1),
 			width: perso.lab.dimensions.caseWidth-6,
-			height: perso.lab.dimensions.caseWidth-6
+			height: perso.lab.dimensions.caseWidth-6,
+			backgroundColor: "red"
 		});
 		$('#characters').append(perso.html);
 		perso.lab.persosPositions[perso.position] = perso;

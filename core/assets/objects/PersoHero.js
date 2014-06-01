@@ -3,7 +3,7 @@
 	Gère le personnage principal
 */
 
-var PersoHero = function (lab){
+var PersoHero = function (lab, name){
 
 	var perso = new Perso(lab);
 
@@ -15,6 +15,7 @@ var PersoHero = function (lab){
 	//	Identité
 
 		perso.position = chiffre_aleatoire(perso.lab.dimensions.totalCases);
+		perso.name = name;
 
 	//	Armes
 
@@ -52,7 +53,7 @@ var PersoHero = function (lab){
 		        perso.position = perso.position - perso.lab.dimensions.casesPerLine;
 				perso.lab.moveMap(perso.position);
 		    }
-		    afterMoving(perso);
+		    afterMoving(perso, "top");
 		};
 
 		// Déplacement vers le bas
@@ -65,7 +66,7 @@ var PersoHero = function (lab){
 			if(perso.lab.murs[perso.position][2] == 0){
 		        perso.position = perso.position + perso.lab.dimensions.casesPerLine;
 				perso.lab.moveMap(perso.position);
-				afterMoving(perso);
+				afterMoving(perso, 'bottom');
 		    }
 		};
 
@@ -80,7 +81,7 @@ var PersoHero = function (lab){
 		        perso.position--;
 				perso.lab.moveMap(perso.position);
 		    }
-		    afterMoving(perso);
+		    afterMoving(perso, "left");
 		};
 
 		// Déplacement vers la droite
@@ -94,7 +95,7 @@ var PersoHero = function (lab){
 		    	perso.position++;
 		    	perso.lab.moveMap(perso.position);
 		    }
-		    afterMoving(perso);
+		    afterMoving(perso, "right");
 		};
 
 	// Gestion des attaques
@@ -267,13 +268,20 @@ var PersoHero = function (lab){
 
 	//	Callbacks
 
-		function afterMoving (perso){
+		function afterMoving (perso, direction){
 			// Gestion des collisions
 			perso.lab.collisions();
 
 			// Gestion du mode online
-			if(perso.lab.online = true){
-				
+			if(perso.lab.online != false){
+				socket.post('/party/sendData',{
+					room: "Test", //this.online.room, // Obligatoire
+					type:'move', // ce que tu envoie par exemple si c'est un mouvement
+					obj: {
+						direction: direction, // enfin tu fous ce que tu veut,
+						name: perso.name
+					}
+				});
 			}
 		};
 
