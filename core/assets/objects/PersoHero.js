@@ -53,7 +53,7 @@ var PersoHero = function (lab, name){
 		        perso.position = perso.position - perso.lab.dimensions.casesPerLine;
 				perso.lab.moveMap(perso.position);
 		    }
-		    afterMoving(perso, "top");
+		    afterMoving(perso);
 		};
 
 		// Déplacement vers le bas
@@ -66,7 +66,7 @@ var PersoHero = function (lab, name){
 			if(perso.lab.murs[perso.position][2] == 0){
 		        perso.position = perso.position + perso.lab.dimensions.casesPerLine;
 				perso.lab.moveMap(perso.position);
-				afterMoving(perso, 'bottom');
+				afterMoving(perso);
 		    }
 		};
 
@@ -81,7 +81,7 @@ var PersoHero = function (lab, name){
 		        perso.position--;
 				perso.lab.moveMap(perso.position);
 		    }
-		    afterMoving(perso, "left");
+		    afterMoving(perso);
 		};
 
 		// Déplacement vers la droite
@@ -95,7 +95,7 @@ var PersoHero = function (lab, name){
 		    	perso.position++;
 		    	perso.lab.moveMap(perso.position);
 		    }
-		    afterMoving(perso, "right");
+		    afterMoving(perso);
 		};
 
 	// Gestion des attaques
@@ -268,7 +268,7 @@ var PersoHero = function (lab, name){
 
 	//	Callbacks
 
-		function afterMoving (perso, direction){
+		function afterMoving (perso){
 			// Gestion des collisions
 			perso.lab.collisions();
 
@@ -277,10 +277,7 @@ var PersoHero = function (lab, name){
 				socket.post('/party/sendData',{
 					room: "Test", //this.online.room, // Obligatoire
 					type:'move', // ce que tu envoie par exemple si c'est un mouvement
-					obj: {
-						direction: direction, // enfin tu fous ce que tu veut,
-						name: perso.name
-					}
+					params: perso.position+"/"+perso.name
 				});
 			}
 		};

@@ -123,7 +123,7 @@ var Labyrinthe = function (totalCases, casesPerLine, assets, level, online, call
 
 		this.generateHeros = function (name){
 			var width = $('td').width();
-			this.heros = new PersoHero(this);
+			this.heros = new PersoHero(this, name);
 			var heros = this.heros;
 			var dimensions = this.dimensions;
 			$("#joueur").css({
@@ -160,6 +160,11 @@ var Labyrinthe = function (totalCases, casesPerLine, assets, level, online, call
 			var perso = new PersoProta(this, id, position);
 			this.adversaires[id] = perso;
 		};
+
+		this.moveAdversaire = function (id, cell){
+			var perso = this.adversaires[id];
+			perso.moveToCell(cell);
+		}
 
 
 	/*

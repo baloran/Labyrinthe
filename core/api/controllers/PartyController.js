@@ -35,7 +35,6 @@ module.exports = {
 
     sendData: function(req,res){
         var name = req.param('room');
-        console.log("hello");
         sails.sockets.broadcast("Test", 'send_data', req.params.all(),req.socket);
     },
 

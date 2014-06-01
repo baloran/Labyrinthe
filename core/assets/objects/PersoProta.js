@@ -60,6 +60,17 @@ var PersoProta = function (lab, id, position){
 			perso.lab.persosPositions[position] = perso;
 		}
 
+		perso.moveToCell = function (cell){
+			console.log(cell);
+			var x = parseInt(cell)%perso.lab.dimensions.casesPerLine;
+			var y = Math.floor(parseInt(cell)/perso.lab.dimensions.casesPerLine);
+			console.log(x+' | '+y);
+			perso.html.animate({
+				top: y*perso.lab.dimensions.caseWidth,
+				left: x*(perso.lab.dimensions.caseWidth+0.8)
+			});
+		};
+
 	// Mort
 
 		perso.die = function (){

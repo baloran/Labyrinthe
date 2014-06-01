@@ -114,7 +114,7 @@
 				<li>
 					<img src="assets/img/Landing/lucas.jpg" alt="">
 					<h3>Lucas Lemahieu</h3>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus, similique at aspernatur earum adipisci eum cum amet iste rem deleniti! Consequatur, numquam velit consectetur temporibus perferendis minima molestias doloribus culpa.</p>
+					<p>Algorythmicien confirmé, Lucas s'est concentré sur les logiques de jeu "pures" telles que l'IA des monstres, la gestion de la luminosité et surout la génération d'un labyrinthe parfait et aléatoire.</p>
 				</li>
 				<li>
 					<img src="assets/img/Landing/evan.jpg" alt="">
@@ -123,8 +123,8 @@
 				</li>
 				<li>
 					<img src="assets/img/Landing/evan.jpg" alt="">
-					<h3>Evan Peuvergne</h3>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus, similique at aspernatur earum adipisci eum cum amet iste rem deleniti! Consequatur, numquam velit consectetur temporibus perferendis minima molestias doloribus culpa.</p>
+					<h3>Magali Rivière</h3>
+					<p>Design du jeu, dessiner les personnages, les armes et les monstres avec un style « steampunk », en prenant en compte les paramètres et contraintes du jeu.</p>
 				</li>
 			</ul>
 		</div>
@@ -263,7 +263,7 @@
 			if(game.pseudo == null){
 				game.pseudo = prompt("Choisissez un pseudo");
 			}
-			game.currentLab = new Labyrinthe(300, 60, null, 6, {room: $(this).attr("href").substring(1)}, function (result){
+			game.currentLab = new Labyrinthe(20, 5, null, 6, {room: $(this).attr("href").substring(1)}, function (result){
 				alert(result);
 			});
 			$('#rooms').hide();
@@ -282,7 +282,7 @@
 		});
 
 		socket.on("start_game",function (data){
-			game.currentLab = new Labyrinthe(300, 60, null, 6, {room: data.room}, function (result){
+			game.currentLab = new Labyrinthe(20, 5, null, 6, {room: data.room}, function (result){
 				alert(result);
 			});
 			$('#rooms').hide();
@@ -301,7 +301,9 @@
 			if(data.type == "initPosition"){
 				game.currentLab.addAdversaire(data.id, data.case);
 			}else if(data.type == "move"){
-				console.log(data);
+				var args = data.params;
+				args = args.split("/");
+				game.currentLab.moveAdversaire(args[1], args[0]);
 			}
 		});
 
