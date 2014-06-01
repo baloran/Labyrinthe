@@ -63,10 +63,29 @@ $(document).ready(function(){
 
 	socket.on("nouvel_utilisateur",function(data){
 		console.log(data);
-	})
+	});
 
 	socket.on("room_created",function(data){
 		$('#rooms ul').append('<li><a class="connect" href="'+data.room+'">'+data.room+'</a><a class="launch" href="'+data.room+'">Launch</a></li>');
+	});
+
+	// Socket.post("party/sendData",{"tes":"différents","object":"que tu veut envoyer"});
+	$("tadiv").click(function(e){
+		e.preventDefault();
+		var room = "le nom de ta room(ou une variable)";
+		socket.post('party/sendData',{
+			'room': room, // Obligatoire
+			'type':'movement', // ce que tu envoie par exemple si c'est un mouvement
+			'direction':'left', // enfin tu fous ce que tu veut
+		});
+	});
+
+	// Ici on recoit les data que le controller renvoit.
+	// Pour utiliser plusieurs fonction à l'intérieur tu peut mettre des condition à l'interieur.
+	socket.on("send_data",function(data){
+		if (data.type == 'movement') { // tu peut verifier ce que tu veut
+			// alors tu fais ce que tu veut
+		}
 	});
 
 	});
