@@ -27,7 +27,7 @@ module.exports.routes = {
 	//
 	// (Alternatively, remove this and add an `index.html` file in your `assets` directory)
 
-	'GET /': "UserController.login",
+	'/': "SitesController.home",
 	'POST /login': "UserController.process",
 	'POST /register': "UserController.register",
 	'GET /profil/:username': "UserController.profil",

@@ -59,10 +59,12 @@ var PersoProta = function (lab, id, position){
 			perso.lab.persosPositions[position] = perso;
 		}
 
-	//	Rencontre avec le héros
+	// Mort
 
-		perso.meet = function (heros){
-			// Fonction de base de rencontre avec le heros
+		perso.die = function (){
+			console.log("mort");
+			perso.html.remove();
+			perso.lab.persosPositions[perso.position] = null;
 		};
 
 

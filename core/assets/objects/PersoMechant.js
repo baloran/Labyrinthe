@@ -14,6 +14,13 @@ var PersoMechant = function (lab, id, position){
 	// Identité
 
 		perso.degats = 30;
+		perso.identite = Config.personnages.mechants.basiques[chiffre_aleatoire(Config.personnages.mechants.basiques.length)];
+
+	// Affichage
+
+		perso.html.css({
+			backgroundImage: 'url('+Config.urls.assets.img.persos+perso.identite.img+')'
+		});
 
 	/*
 		Méthodes
@@ -40,12 +47,6 @@ var PersoMechant = function (lab, id, position){
 
 		    perso.moveOnMap(mouvement.x, mouvement.y, true);
 		}
-
-	// Collision
-
-		perso.meet = function (heros){
-			heros.attacked(perso.degats);
-		};
 
 
 	return perso;

@@ -13,6 +13,7 @@ var Perso = function (lab){
 	//	Identité
 
 		this.position = null;
+		this.degat = 0;
 		this.life = 100;
 
 
@@ -24,6 +25,30 @@ var Perso = function (lab){
 	/*
 		Méthodes 
 	*/
+
+	// Rencontre
+
+		this.meet = function (victime){
+			victime.attacked(this.degats);
+		};
+
+	// Attaque
+
+		this.attacked = function (degats){
+			if(this.life > 0){
+				this.life = this.life - degats;
+			}else{
+				this.die();
+			}
+		};
+
+	// Mort
+
+		this.die = function (){
+			console.log('il est mort');
+		}
+
+
 
 	
 

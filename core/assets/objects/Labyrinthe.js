@@ -9,7 +9,7 @@
 */
 
 
-var Labyrinthe = function (totalCases, casesPerLine, assets, level, online){
+var Labyrinthe = function (totalCases, casesPerLine, assets, level, online, callback){
 
 	/*
 		Propriétés
@@ -55,9 +55,12 @@ var Labyrinthe = function (totalCases, casesPerLine, assets, level, online){
 
 		this.timer = null;
 		if(this.online == false){
-			setInterval(function(){that.mouvementsMechants(); that.collisions();}, 1000);
+			this.timer = setInterval(function(){that.mouvementsMechants(); that.collisions();}, 1000);
 		}
 
+	// Callback
+
+		this.callback = callback;
 
 	/*
 		Méthodes
@@ -95,6 +98,7 @@ var Labyrinthe = function (totalCases, casesPerLine, assets, level, online){
 
 		this.launch = function (){
 			// commentaire
+			generatePersos(this);
 			affichage(this);
 		};
 
@@ -119,6 +123,7 @@ var Labyrinthe = function (totalCases, casesPerLine, assets, level, online){
 		this.generateHeros = function (){
 			var width = $('td').width();
 			this.heros = new PersoHero(this);
+			var heros = this.heros;
 			var dimensions = this.dimensions;
 			$("#joueur").css({
 				width: width - 6,
@@ -126,6 +131,13 @@ var Labyrinthe = function (totalCases, casesPerLine, assets, level, online){
 				top: Math.floor(($(window).height()/dimensions.caseWidth)/2)*width+3,
 				left: (($(window).width()/2) - width/2)+3
 			});
+			if(this.online != false){
+				socket.post('party/sendData',{
+					'room': this.online.room, // Obligatoire
+					'type':'initPosition', // ce que tu envoie par exemple si c'est un mouvement
+					'case': heros.position, // enfin tu fous ce que tu veut
+				});
+			}
 			this.moveMap(this.heros.position);
 		}
 
@@ -137,8 +149,13 @@ var Labyrinthe = function (totalCases, casesPerLine, assets, level, online){
 
 		this.collisions = function (){
 			if(this.persosPositions[this.heros.position] != null){
+				//console.log(this.persosPositions[this.heros.position]);
 				this.persosPositions[this.heros.position].meet(this.heros);
 			}
+		};
+
+		this.addAdversaire = function (id, position){
+
 		};
 
 
@@ -301,19 +318,26 @@ var Labyrinthe = function (totalCases, casesPerLine, assets, level, online){
 				width: dimensions.caseWidth,
 				height: dimensions.caseWidth
 			});
-
-			if(l.online = false){
-				generatePersos(l);
-			}
 		}
 
 		function generatePersos (l){
-			alert
 			if(l.level != null){
 				for(var i=0; i<l.level*3; i++){
 					l.protagonistes[i] = new PersoMechant(l, "mechant"+i, chiffre_aleatoire(l.dimensions.totalCases));
 				}
 			}
+		}
+
+	// Netoyage
+
+		this.clear = function (){
+			alert('netoyage');
+			clearInterval(this.timer);
+			this.heros.clear();
+			for (prop in this){this[prop]=null}
+			$('#content').find('table').remove();
+			$('#joueur').css("backgroundImage", "none");
+			$('#characters').find('.perso').remove();
 		}
 
 	/*
@@ -325,7 +349,7 @@ var Labyrinthe = function (totalCases, casesPerLine, assets, level, online){
 		function mapEndedMoving(l){
 			// Test de la fin du labyrinthe
 			if(l.heros.position == l.sortie){
-				alert("c'est fini");
+				l.callback(true);
 			}
 			l.heros.luminosite();
 			l.heros.isMoving = false;

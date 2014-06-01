@@ -17,6 +17,10 @@
 
 module.exports = {
 
+	home: function (req, res){
+		res.view({layout: null});
+	},
+
 	index:function(req,res){
 		var data;
 		Sites.findOne(1,function(err,options){

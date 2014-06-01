@@ -47,6 +47,7 @@ $(document).ready(function(){
 
 
 	socket.on("start_game",function (data){
+		alert('hello');
 		laby = new Labyrinthe(300, 60, null, 6, "host");
 		$('#rooms').hide();
 		$('#game').show();
