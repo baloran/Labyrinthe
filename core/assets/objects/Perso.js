@@ -35,6 +35,7 @@ var Perso = function (lab){
 	// Attaque
 
 		this.attacked = function (degats){
+			var html = this.html.css("background-color", "red");
 			if(this.life > 0){
 				this.life = this.life - degats;
 			}else{
@@ -45,7 +46,7 @@ var Perso = function (lab){
 	// Mort
 
 		this.die = function (){
-			console.log('il est mort');
+			
 		}
 
 

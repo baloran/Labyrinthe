@@ -20,6 +20,9 @@ var PersoProta = function (lab, id, position){
 
 	//	Affichage
 
+		var color = "red";
+		if(perso.lab.online == false){color = "transparent"}
+
 		perso.html = $('<div class="perso" id="'+this.id+'"></div>');
 		var x = perso.position%perso.lab.dimensions.casesPerLine;
 		var y = Math.floor(perso.position/perso.lab.dimensions.casesPerLine);
@@ -28,7 +31,7 @@ var PersoProta = function (lab, id, position){
 			left: x*(perso.lab.dimensions.caseWidth+1),
 			width: perso.lab.dimensions.caseWidth-6,
 			height: perso.lab.dimensions.caseWidth-6,
-			backgroundColor: "red"
+			backgroundColor: color
 		});
 		$('#characters').append(perso.html);
 		perso.lab.persosPositions[perso.position] = perso;

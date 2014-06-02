@@ -75,7 +75,7 @@ html {
   top: 20px;
   color: white;
   text-align: center;
-  z-index: 2000000;
+  z-index: 2000000000000;
   -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease;
 }
@@ -102,7 +102,7 @@ html {
   position: absolute;
   left: 20px;
   top: 20px;
-  z-index: 2000000;
+  z-index: 200000000000;
   -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease;
 }
@@ -248,7 +248,7 @@ nav {
   line-height:1.5;
 }
 
-.section .content p:first-child{
+.section .content p{
   display: block;
   width:80%;
   margin:auto;
@@ -257,6 +257,7 @@ nav {
   font-size: 20px;
   line-height:1.5;
   text-align: center;
+  margin-bottom:20px;
 }
 
 /* line 166, main.scss */
@@ -377,5 +378,13 @@ nav ul li a:hover {
   width:20px;
   height:auto;
   display: inline-block;
+}
+
+#life-bar{
+  display: none;
+}
+
+#video-intro{
+  background-color:black;
 }
 

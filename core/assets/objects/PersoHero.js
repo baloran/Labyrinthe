@@ -112,7 +112,7 @@ var PersoHero = function (lab, name){
 		perso.attack = function (){
 			var target = false;
 			var decalages = new Array(-perso.lab.dimensions.casesPerLine, 1, perso.lab.dimensions.casesPerLine, -1);
-			for(var i=1; i<=perso.armes[perso.currentArme].portee; i++){
+			for(var i=0; i<perso.armes[perso.currentArme].portee; i++){
 				if(!target){
 					var cell = perso.lab.persosPositions[perso.position+(i*decalages[perso.direction])];
 					if(cell){
@@ -140,7 +140,7 @@ var PersoHero = function (lab, name){
 
 		    var distance;
 
-		    //$('td div').css('opacity', 0);  /**** LIGNE A METTRE EN COMMENTAIRE SI ON VEUT QUE LES LUMIERES RESTENT APRES DECOUVERTE ****/
+		    $('td div').css('opacity', 0);  /**** LIGNE A METTRE EN COMMENTAIRE SI ON VEUT QUE LES LUMIERES RESTENT APRES DECOUVERTE ****/
 
 		    $('#case_' + perso.position).css('opacity', 1);
 
@@ -260,6 +260,9 @@ var PersoHero = function (lab, name){
 					break;
 					case 88: 
 						perso.currentArme = (perso.currentArme + 1)%perso.armes.length;
+						$('#joueur').css({
+							backgroundImage: 'url('+Config.urls.assets.img.persos + Config.personnages.heros[perso.armes[perso.currentArme].name] +')',
+						});
 						perso.degats = perso.armes[perso.currentArme].degats;
 					break;
 				}

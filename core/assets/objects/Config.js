@@ -6,15 +6,15 @@ var Config = {
 	armes: {
 		base: new Array(
 			{
-				name: "Pistolet",
+				name: "pistolet",
 				img: "url.png",
-				degats: 100,
+				degats: 20,
 				portee : 3
 			},
 			{
-				name: "Epée",
+				name: "epee",
 				img: "url.png",
-				degats: 60,
+				degats: 40,
 				portee: 1
 			}
 		),

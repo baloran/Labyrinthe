@@ -11,8 +11,13 @@
 </head>
 <body>
 	
-	<a href="#" class="back"><img src="assets/img/Landing/back.png" alt=""></a>
 	<a href="#" class="close"><img src="assets/img/Landing/x.png" alt=""></a>
+	<div id="life-bar">
+		<div class="life"></div>
+	</div>
+	<audio id="audio-player" loop autoplay>
+		<source src="assets/musics/music.mp3" type="audio/mp3">
+	</audio>
 
 	<div id="accueil">
 		<h1>Dark Maze</h1>
@@ -30,7 +35,9 @@
 			<div class="container">
 				<h2>Choix du mode de jeu</h2>
 				<div class="content">
-					<p>Choisissez votre mode de jeu. Vous pouvez jouer en mode solo et passer de niveaux en niveau, ou affronter vos amis en mode multijoueurs.</p>
+					<p>Choisissez votre mode de jeu</p>
+					<p>Mode Solo : Penetrez seul dans le labyrinthe, essayez de trouver la sortie tout en évitant les monstres et en ne mourrant pas de faim. Enchainez les niveau et peut être réussirez vous à vous sortir pour de bon de ce bien mauvais pas !</p>
+					<p>Mode multijoueur (BETA) : Affrontez vos amis en ligne dans un combat sans merci au coeur d'un labyrinthe oppressant.</p>
 				</div>
 				<nav>
 					<ul>
@@ -109,26 +116,31 @@
 				<li>
 					<img src="assets/img/Landing/evan.jpg" alt="">
 					<h3>Evan Peuvergne</h3>
-					<p>Chef de projet, je me suis principalement employé à organiser le code au sein d'une strucure objet propice à la maintenabilité.</p>
+					<p>Chef de projet, je me suis principalement employé à organiser et coordonner le code au sein d'une strucure objet propice à la maintenabilité. Je me suis également occupé de l'intégration du site.</p>
 				</li>
 				<li>
 					<img src="assets/img/Landing/lucas.jpg" alt="">
 					<h3>Lucas Lemahieu</h3>
-					<p>Algorythmicien confirmé, Lucas s'est concentré sur les logiques de jeu "pures" telles que l'IA des monstres, la gestion de la luminosité et surout la génération d'un labyrinthe parfait et aléatoire.</p>
+					<p>Responsable développement, je me suis en priorité employé à concevoir et mettre en œuvre les principaux algorithmes, puis à les optimiser pour obtenir un jeu plus optimisé et moins lourd.</p>
 				</li>
 				<li>
-					<img src="assets/img/Landing/evan.jpg" alt="">
-					<h3>Evan Peuvergne</h3>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus, similique at aspernatur earum adipisci eum cum amet iste rem deleniti! Consequatur, numquam velit consectetur temporibus perferendis minima molestias doloribus culpa.</p>
+					<img src="assets/img/Landing/arnaud.jpg" alt="">
+					<h3>Arnaud Allouis</h3>
+					<p>Spécialiste NodeJS et Sails, Arnaud a pris en charge toute la partie serveur relative au multijoeur real time (sockets) et de l'api, ainsi que de la mise en production.</p>
 				</li>
 				<li>
-					<img src="assets/img/Landing/evan.jpg" alt="">
+					<img src="assets/img/Landing/magali.jpg" alt="">
 					<h3>Magali Rivière</h3>
 					<p>Design du jeu, dessiner les personnages, les armes et les monstres avec un style « steampunk », en prenant en compte les paramètres et contraintes du jeu.</p>
 				</li>
 			</ul>
 		</div>
 	</div>
+
+	<video id="intro-video" class="section" style="z-index:1000000000000000000000000000000;">
+		<source src="assets/img/intro.mp4" type="video/mp4" />
+		Votre navigateur ne vous permet pas de visionner cette vidéo
+	</video>
 
 <script src="librairies/jquery.js"></script>
 <script src="librairies/preload.js"></script>
@@ -147,6 +159,7 @@
 		var game = {
 			currentLab: null,
 			pseudo: null,
+			intro: false,
 			solo: {
 				level : 1
 			},
@@ -214,6 +227,8 @@
 			if($(this).attr('id') == "btn-multi"){
 				$('#infos').hide();
 				$('#rooms').show();
+			}else{
+				console.log(localStorage.getItem('lastGame').online);
 			}
 			$('#choix-mode-jeu').animate({
 				left: -$(window).width()
@@ -222,25 +237,39 @@
 
 		$(document).on("click", "#launch-level", function (e){
 			e.preventDefault();
-			$('#infos').fadeOut(500, function (){
-				game.currentLab = new Labyrinthe(150, 20, null, game.solo.level, false, function (result){
-					if(result){
-						game.solo.level++;
-						$('#infos').find('h2').text("Victoire");
-					}else{
-						game.solo.level = 1;
-						$('#infos').find('h2').text("Défaite");
-					}
-					game.currentLab.clear();
-					game.currentLab = null;
-					$('#infos').find("a").text("Niveau "+game.solo.level);
-					$('#infos').fadeIn(500);
+			if(game.solo.level == 1 && !game.intro){
+				$('#intro-video').addClass('active').get(0).play();
+				$('#audio-player').get(0).pause();
+			}else{
+				$('#infos').fadeOut(500, function (){
+					$('#life-bar').fadeIn(500);
+					game.currentLab = new Labyrinthe(150, 20, game.solo.level, false, function (result){
+						if(result){
+							game.solo.level++;
+							$('#infos').find('h2').text("Victoire");
+						}else{
+							game.solo.level = 1;
+							$('#infos').find('h2').text("Défaite");
+						}
+						game.currentLab.clear();
+						game.currentLab = null;
+						$('#infos').find("a").text("Niveau "+game.solo.level);
+						$('#infos').fadeIn(500);
+					});
+					game.currentLab.construct();
+					game.currentLab.generateHeros();
+					game.currentLab.launch();
 				});
-				game.currentLab.construct();
-				game.currentLab.generateHeros();
-				game.currentLab.launch();
-			});
+			}
 		});
+
+		var video = document.getElementsByTagName('video')[0];
+
+		video.onended = function(e) {
+		  $('#intro-video').removeClass('active');
+		  game.intro = true;
+		  $('#audio-player').get(0).play();
+		}
 
 		$('#create-party').click(function (e){
 			var name = prompt("Veuillez choisir un nom pour la room");
@@ -263,7 +292,7 @@
 			if(game.pseudo == null){
 				game.pseudo = prompt("Choisissez un pseudo");
 			}
-			game.currentLab = new Labyrinthe(20, 5, null, 6, {room: $(this).attr("href").substring(1)}, function (result){
+			game.currentLab = new Labyrinthe(20, 5, 1, {room: $(this).attr("href").substring(1)}, function (result){
 				alert(result);
 			});
 			$('#rooms').hide();
@@ -282,7 +311,7 @@
 		});
 
 		socket.on("start_game",function (data){
-			game.currentLab = new Labyrinthe(20, 5, null, 6, {room: data.room}, function (result){
+			game.currentLab = new Labyrinthe(20, 5, 1, {room: data.room}, function (result){
 				alert(result);
 			});
 			$('#rooms').hide();
@@ -315,19 +344,7 @@
 			$(this).removeClass('active');
 			$('.section.active').removeClass('active');
 			$('#accueil').fadeIn(500);
-		});
-
-		$('a.back').click(function (e){
-			e.preventDefault();
-			if(game.currentLab != null){
-				game.currentLab.clear();
-			}
-			$(this).removeClass('active');
-			$('#choix-mode-jeu').animate({
-				left: 0
-			},	function (){
-				$('#infos').show();
-			});
+			$('#life-bar').fadeOut(500);
 		});
 
 	});

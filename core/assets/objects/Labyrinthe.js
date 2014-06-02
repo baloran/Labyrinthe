@@ -9,7 +9,7 @@
 */
 
 
-var Labyrinthe = function (totalCases, casesPerLine, assets, level, online, callback){
+var Labyrinthe = function (totalCases, casesPerLine, level, online, callback){
 
 	/*
 		Propriétés
@@ -41,14 +41,16 @@ var Labyrinthe = function (totalCases, casesPerLine, assets, level, online, call
 
 	//	Elements graphiques
 
-		this.loader = new Loader();
 		this.html = null;
-		this.assets = assets;
+		if(this.online == false){
+
+		}
 
 	//	Gestion des personnages
 
-		this.persosPositions = new Array(totalCases);
 		this.heros = null;
+		this.faim = 180000;
+		this.persosPositions = new Array(totalCases);
 		this.protagonistes = new Array();
 		this.adversaires = new Array();
 
@@ -56,7 +58,20 @@ var Labyrinthe = function (totalCases, casesPerLine, assets, level, online, call
 
 		this.timer = null;
 		if(this.online == false){
-			this.timer = setInterval(function(){that.mouvementsMechants(); that.collisions();}, 1000);
+			this.timer = setInterval(function(){
+				that.mouvementsMechants(); 
+				that.collisions();
+				if(that.online == false){
+					if(that.faim <= 0){
+						that.heros.die();
+					}else{
+						that.faim = that.faim - 1000;
+						var percentage = (that.faim/180000);
+						$('#life-bar .life').css("width", $(window).width()*percentage);
+						$('#life-bar span').html(that.faim/1000);
+					}
+				}
+			}, 1000);
 		}
 
 	// Callback
@@ -165,6 +180,10 @@ var Labyrinthe = function (totalCases, casesPerLine, assets, level, online, call
 			var perso = this.adversaires[id];
 			perso.moveToCell(cell);
 		}
+
+	
+
+
 
 
 	/*
@@ -339,7 +358,6 @@ var Labyrinthe = function (totalCases, casesPerLine, assets, level, online, call
 	// Netoyage
 
 		this.clear = function (){
-			alert('netoyage');
 			clearInterval(this.timer);
 			this.heros.clear();
 			for (prop in this){this[prop]=null}

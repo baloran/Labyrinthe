@@ -43,6 +43,7 @@ var PersoMechant = function (lab, id, position){
 		        mouvements.push({x: -1, y: 0});
 		    }
 
+		    perso.html.css("background-color", 'transparent');
 		    var mouvement = mouvements[chiffre_aleatoire(mouvements.length)];
 
 		    perso.moveOnMap(mouvement.x, mouvement.y, true);
