@@ -183,7 +183,7 @@ html {
 
 h1 {
   display: block;
-  font-family: "Alien Encounters";
+  font-family: "Alien";
   font-size: 150px;
   color: white;
   text-align: center;
@@ -196,7 +196,7 @@ h1 {
 /* line 148, main.scss */
 
 h2 {
-  font-family: Agency FB;
+  font-family: Agency;
   text-align: center;
   color: white;
   text-transform: uppercase;
@@ -284,7 +284,7 @@ nav ul li a {
   color: white;
   text-decoration: none;
   margin: auto;
-  font-family: Agency FB;
+  font-family: Agency;
   text-transform: uppercase;
   font-size: 25px;
   padding-top: 20px;
@@ -326,7 +326,7 @@ nav ul li a:hover {
 
 #team li h3{
   color:white;
-  font-family: Agency FB;
+  font-family: Agency;
   font-size:30px;
   text-align:center;
   position:relative;
@@ -356,7 +356,7 @@ nav ul li a:hover {
 #rooms ul li span{
   display: block;
   margin:auto;
-  font-family: Agency FB;
+  font-family: Agency;
   font-size:24px;
   color:white;
   margin-bottom:20px;
